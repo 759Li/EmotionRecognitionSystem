@@ -1,0 +1,85 @@
+EmotionRecognitionSystem/
+├── p0_MySQL/
+│   ├── sql_base.py
+│   ├── sql_model.py
+│   └── __init__.py
+├── p1_models_train/
+│   ├── LightGBM/
+│   │   ├── data/
+│   │   │   ├── anger/
+│   │   │   ├── disgust/
+│   │   │   ├── fear/
+│   │   │   ├── happy/
+│   │   │   ├── neutral/
+│   │   │   ├── sadness/
+│   │   │   └── surprise/
+│   │   ├── model/
+│   │   │   ├── features.npz
+│   │   │   ├── micro_expression_model.txt
+│   │   │   ├── scaler_mean.npy
+│   │   │   ├── scaler_scale.npy
+│   │   │   ├── selected_features.npy
+│   │   │   └── test_features.npz
+│   │   ├── plots/
+│   │   ├── image_live_model.py
+│   │   └── LightGBM_MicroExpression_Analysis_Pipeline.py
+│   └── TextModel/
+│       ├── nlp_structbert_emotion_classification_chinese_base/
+│       └── text_model.py
+├── p2_web_frontend/
+│   ├── static/
+│   │   ├── css/
+│   │   │   ├── font-awesome.css
+│   │   │   └── style.css
+│   │   ├── fonts/
+│   │   │   ├── fontawesome-webfont.eot
+│   │   │   ├── fontawesome-webfont.svg
+│   │   │   ├── fontawesome-webfont.ttf
+│   │   │   ├── fontawesome-webfont.woff
+│   │   │   ├── fontawesome-webfont.woff2
+│   │   │   ├── FontAwesome.otf
+│   │   │   └── simsun.ttc
+│   │   ├── img/
+│   │   │   └── into.png
+│   │   └── js/
+│   │       ├── echarts.min.js
+│   │       ├── jquery.min.js
+│   │       └── text_emotion.js
+│   └── templates/
+│       ├── dashboard.html
+│       ├── history.html
+│       ├── login.html
+│       ├── recognition.html
+│       ├── register.html
+│       ├── share.html
+│       └── user.html
+├── 相关文档/
+│   ├── p0/
+│   │   ├── emotion_recognition.md
+│   │   ├── emotion_recognition.sql
+│   │   └── 数据库操作说明.md
+│   ├── p1/
+│   │   ├── 图像/
+│   │   │   ├── LigntGBM框架.txt
+│   │   │   ├── 微表情分析系统 API 调用文档.md
+│   │   │   └── 情绪映射与修正流程.drawio
+│   │   └── 文本/
+│   │       ├── 情绪映射与修正流程.drawio
+│   │       ├── 文本情感分析 API 使用文档.md
+│   │       └── 文本情绪分析模块文件结构.txt
+│   ├── p2/
+│   │   ├── 历史记录与分享功能说明文档.md
+│   │   ├── 情绪识别功能说明文档.md
+│   │   ├── 数据看板说明文档.md
+│   │   ├── 注册功能说明文档.md
+│   │   ├── 用户中心说明文档.md
+│   │   ├── 登录功能说明文档.md
+│   │   └── 页面模板.zip
+│   ├── 技术框架说明文档.md
+│   ├── 系统四层架构图.drawio
+│   ├── 项目文件框架.txt
+│   └── 项目系统依赖检测报告.md
+├── app.py
+├── README.md
+├── requirements.txt
+└── 部署流程.md

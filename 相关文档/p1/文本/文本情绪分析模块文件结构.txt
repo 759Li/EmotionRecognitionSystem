@@ -1,0 +1,13 @@
+EmotionRecognitionSystem/p1_models_train/TextModel/
+│ 
+├── text_model.py
+└── nlp_structbert_emotion_classification_chinese_base/								
+      ├── .mdl
+      ├── .msc
+      ├── .mv
+      ├── config.json
+      ├── configuration.json
+      ├── model.jpg
+      ├── pytorch_model.bin
+      ├── vocab.txt
+      └── 文本模型README.md

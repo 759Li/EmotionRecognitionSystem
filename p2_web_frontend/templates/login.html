@@ -1,0 +1,86 @@
+<!--
+文件功能：登录页面模板，用于用户身份验证和系统访问控制
+编写日期：2025年07月
+班级：物联一班
+学号：202378040109
+作者：李正标
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>登录 - 情绪识别系统</title>
+    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet"><!-- Font-awesome-CSS -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css"/><!-- style.css -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="情绪识别系统,用户登录界面,人脸识别,深度学习应用,响应式前端模板,用户身份验证">
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<!--    <script>-->
+<!--        // 文档加载完成后执行-->
+<!--        $(document).ready(function(c) {-->
+<!--            // 为关闭按钮绑定点击事件-->
+<!--            $('.alert-close').on('click', function(c){-->
+<!--                // 以慢速淡出动画隐藏登录框-->
+<!--                $('.main-agile').fadeOut('slow', function(c){-->
+<!--                    // 动画完成后从DOM中移除元素-->
+<!--                    $('.main-agile').remove();-->
+<!--                });-->
+<!--            });	  -->
+<!--        });-->
+<!--    </script>-->
+    <style>
+       /* 响应式设计样式 */
+        @media (max-width: 768px) {
+            .content-wthree {
+                width: 90%;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            .footer-w3l p {
+                font-size: 0.9em;
+            }
+        }
+        @media (max-width: 480px) {
+            .content-wthree {
+                padding: 15px;
+            }
+            .inputs-w3ls input {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;">人脸情绪识别系统</h1>
+    <div class="main-agile" style="display:flex; justify-content:center;">
+        <!--<div class="alert-close"></div>-->
+        <div class="content-wthree">
+            <div class="circle-w3layouts"></div>
+            <h2 style="text-align:center;">欢迎</h2>
+            <form action="/login" method="post">
+                <div class="inputs-w3ls">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <input type="text" name="username" placeholder="Username" required=""/>
+                </div>
+                <div class="inputs-w3ls">
+                    <i class="fa fa-key" aria-hidden="true"></i>
+                    <input type="password" name="password" placeholder="Password" required=""/>
+                </div>
+                <input type="submit" value="登录" style="width:100%; margin-top:15px;">
+                <div class="wthree-text" style="margin-top:10px;">
+                    <ul style="list-style:none; padding:0; text-align:center;">
+                        <li><a href="/register" style="color:#007BFF; text-decoration:underline;">新用户注册</a></li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="footer-w3l" style="text-align:center; margin-top:30px;">
+        <p class="agileinfo">&copy; 2025 七情六欲项目组. 基于深度学习的情绪识别系统</p>
+    </div>
+</body>
+</html>

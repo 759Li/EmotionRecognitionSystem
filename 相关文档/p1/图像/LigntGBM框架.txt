@@ -1,0 +1,12 @@
+EmotionRecognitionSystem/p1_models_train/LightGBM/
+│ 
+├── LightGBM_MicroExpression_Analysis_Pipeline.py		# 微表情分析流程
+├── shape_predictor_68_face_landmarks.dat          		# 人脸关键点模型
+├── image_live_model.py							# 模型封装调用
+├── data/									# 训练数据集
+├── plots/								# 特征重要性图、训练代码说明
+└── model/								# 训练好的模型
+      ├── scaler_mean.npy						# 特征标准化的均值文件
+      ├── scaler_scale.npy						# 特征标准化的标准差文件
+      ├── selected_features.npy					# 筛选后的关键特征列表
+      └── micro_expression_model.txt				# LightGBM 微表情分析模型

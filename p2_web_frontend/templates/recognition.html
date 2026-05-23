@@ -1,0 +1,1246 @@
+<!--文件功能：
+情绪识别页面模板，用于实现多模态情绪识别系统的前端交互
+编写日期：2025年07月
+班级：物联一班
+学号：202378040109
+作者：李正标
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>识别 - 情绪识别系统</title>
+    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <style>
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(22, 93, 255, 0.9);
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .logo i {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        .nav-links li {
+            margin: 0 15px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #FFC107;
+        }
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        .user-actions a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .user-actions a i {
+            margin-right: 5px;
+        }
+        .main-content {
+            margin-top: 80px;
+            padding: 40px 20px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 80px auto 40px;
+        }
+        .page-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .page-title h1 {
+            font-size: 36px;
+            color: #165DFF;
+            margin-bottom: 10px;
+        }
+        .page-title p {
+            font-size: 18px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .modality-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        .modality-card {
+            width: calc(33% - 20px);
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .modality-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .card-icon {
+            font-size: 48px;
+            color: #165DFF;
+            margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .card-desc {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .card-btn {
+            background: #165DFF;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .card-btn:hover {
+            background: #0D47A1;
+        }
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #eee, transparent);
+            margin: 50px 0;
+        }
+        .feature-section {
+            margin-top: 60px;
+        }
+        .feature-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .feature-title h2 {
+            font-size: 28px;
+            color: #333;
+            position: relative;
+            display: inline-block;
+        }
+        .feature-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #165DFF;
+            border-radius: 3px;
+        }
+        .feature-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+        .feature-card {
+            width: calc(33% - 20px);
+            min-width: 280px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            padding: 25px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .feature-icon {
+            font-size: 24px;
+            color: #165DFF;
+            margin-right: 15px;
+            margin-top: 2px;
+        }
+        .feature-content h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .feature-content p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        .footer {
+            background: #013ca6;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        .footer p {
+            margin: 0;
+            font-size: 15px;
+        }
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .modal-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 {
+            font-size: 22px;
+            color: #333;
+            margin: 0;
+        }
+        .close-modal {
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+            background: none;
+            border: none;
+            outline: none;
+        }
+        .modal-body {
+            padding: 30px;
+        }
+        /* 文本分析模态框 */
+        .text-analysis form {
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 15px;
+            color: #555;
+        }
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            min-height: 150px;
+            resize: vertical;
+        }
+        .char-count {
+            text-align: right;
+            font-size: 14px;
+            color: #999;
+            margin-top: 5px;
+        }
+        .btn-submit {
+            background: #165DFF;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover {
+            background: #0D47A1;
+        }
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            display: none;
+        }
+        .main-emotion {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 15px;
+        }
+        .emotion-confidence {
+            margin: 15px 0;
+        }
+        .confidence-bar {
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        .confidence-value {
+            height: 100%;
+            background: #165DFF;
+            width: 0;
+            border-radius: 5px;
+            transition: width 0.5s;
+        }
+        .confidence-text {
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+        }
+        .keywords {
+            margin-top: 15px;
+        }
+        .keyword {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #FFC107;
+            color: white;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        /* 图片分析模态框 */
+        .image-upload {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .upload-area {
+            border: 2px dashed #165DFF;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: border 0.3s;
+        }
+        .upload-area:hover {
+            border-color: #0D47A1;
+            background: #f0f7ff;
+        }
+        .upload-icon {
+            font-size: 36px;
+            color: #165DFF;
+            margin-bottom: 15px;
+        }
+        .upload-text {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .upload-note {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 20px;
+        }
+        .image-preview {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 5px;
+            display: none;
+        }
+        .face-result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            display: none;
+        }
+        .face-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-left: 3px solid #165DFF;
+            background: #f0f7ff;
+        }
+        .face-emotion {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .face-confidence {
+            font-size: 14px;
+            color: #666;
+        }
+        /* 视频分析模态框 */
+        .video-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .video-preview {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-width: 100%;
+            max-height: 400px;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .video-element {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 5px;
+        }
+        .no-camera {
+            color: #999;
+            font-size: 16px;
+            display: none;
+        }
+        .camera-controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .control-btn {
+            background: #f0f0f0;
+            color: #555;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .control-btn.active {
+            background: #165DFF;
+            color: white;
+        }
+        .video-emotion {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            display: none;
+        }
+        .current-emotion {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .emotion-level {
+            font-size: 14px;
+            color: #666;
+        }
+        /* 情绪样式类 */
+        .text-angry { color: #E53935; }
+        .bg-angry-light { background-color: #ffebee; }
+        .text-disgust { color: #43A047; }
+        .bg-disgust-light { background-color: #e8f5e9; }
+        .text-fear { color: #8E24AA; }
+        .bg-fear-light { background-color: #f3e5f5; }
+        .text-happy { color: #FFB300; }
+        .bg-happy-light { background-color: #fff8e1; }
+        .text-sad { color: #1E88E5; }
+        .bg-sad-light { background-color: #e3f2fd; }
+        .text-surprise { color: #FB8C00; }
+        .bg-surprise-light { background-color: #fff3e0; }
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+            }
+            .modality-card {
+                width: 100%;
+            }
+            .feature-card {
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .feature-icon {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav-bar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa fa-shield" aria-hidden="true"></i>
+                <span>七情六欲</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/recognition" style="color: #FFC107; font-weight: bold;">情绪识别</a></li>
+                <li><a href="/history">历史记录</a></li>
+                <li><a href="/dashboard">数据看板</a></li>
+                <li><a href="/user">用户中心</a></li>
+            </ul>
+            <div class="user-actions">
+                <a href="#"><i class="fa fa-bell" aria-hidden="true"></i></a>
+                <a href="/"><i class="fa fa-sign-out" aria-hidden="true"></i>退出</a>
+            </div>
+        </div>
+    </div>
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <div class="page-title">
+            <h1>多模态情绪识别系统</h1>
+            <p>通过文本、图片和实时视频分析，精准识别7类情绪状态，帮助您更好地理解情感表达</p>
+        </div>
+        <div class="modality-cards">
+            <!-- 文本分析卡片 -->
+            <div class="modality-card" id="textModalTrigger">
+                <div class="card-icon">
+                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                </div>
+                <div class="card-title">文本情绪分析</div>
+                <div class="card-desc">输入中文文本，系统将分析其中的情绪倾向，返回7类情绪标签及置信度</div>
+                <button class="card-btn">开始分析</button>
+            </div>
+            <!-- 图片分析卡片 -->
+            <div class="modality-card" id="imageModalTrigger">
+                <div class="card-icon">
+                    <i class="fa fa-image" aria-hidden="true"></i>
+                </div>
+                <div class="card-title">图片情绪识别</div>
+                <div class="card-desc">上传含人脸的图片，系统将检测人脸并标注情绪标签，支持多人脸场景</div>
+                <button class="card-btn" id="uploadImage">上传图片</button>
+            </div>
+            <!-- 视频分析卡片 -->
+            <div class="modality-card" id="videoModalTrigger">
+                <div class="card-icon">
+                    <i class="fa fa-video-camera" aria-hidden="true"></i>
+                </div>
+                <div class="card-title">实时视频识别</div>
+                <div class="card-desc">开启摄像头，系统将实时识别面部表情，每秒处理10帧并标注情绪</div>
+                <button class="card-btn" id="uploadVideo">上传视频</button>
+            </div>
+        </div>
+        <div class="section-divider"></div>
+        <div class="feature-section">
+            <div class="feature-title">
+                <h2>系统核心功能</h2>
+            </div>
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>7类情绪精准识别</h3>
+                        <p>系统支持高兴、愤怒、悲伤、恐惧、惊讶、厌恶、自然7种基本情绪的识别，准确率可达70%以上</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa fa-history" aria-hidden="true"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>情绪历史记录</h3>
+                        <p>自动保存所有情绪识别记录，支持按时间范围筛选，方便追溯和分析情绪变化趋势</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>数据可视化分析</h3>
+                        <p>提供周情绪分布柱状图、近30天趋势折线图和情绪词云图，直观展示情绪数据特征</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 页脚 -->
+    <div class="footer">
+        <p>© 2025 七情六欲项目组. 基于深度学习的人脸情绪识别系统</p>
+    </div>
+    <!-- 文本分析模态框 -->
+    <div class="modal" id="textModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>文本情绪分析</h3>
+                <button class="close-modal" id="closeTextModal">&times;</button>
+            </div>
+            <div class="modal-body text-analysis">
+                <form id="textAnalysisForm">
+                    <div class="form-group">
+                        <label for="textInput">请输入中文文本（不超过100字）</label>
+                        <textarea id="textInput" placeholder="输入文本..."></textarea>
+                        <div class="char-count">0/100</div>
+                    </div>
+                    <button type="submit" class="btn-submit">分析情绪</button>
+                </form>
+                <div class="result-section" id="textResultSection">
+                    <div class="main-emotion text-happy" id="mainEmotion"></div>
+                    <div class="emotion-confidence">
+                        <div class="confidence-bar">
+                            <div class="confidence-value" style="width: 70%"></div>
+                        </div>
+                        <div class="confidence-text">确定为当前情绪</div>
+                    </div>
+                    <div class="keywords" id="textKeywords"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 图片分析模态框 -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>图片情绪识别</h3>
+                <button class="close-modal" id="closeImageModal">&times;</button>
+            </div>
+            <div class="modal-body image-analysis">
+                <div class="image-upload">
+                    <div class="upload-area" id="imageUploadArea">
+                        <div class="upload-icon">
+                            <i class="fa fa-upload" aria-hidden="true"></i>
+                        </div>
+                        <div class="upload-text">点击或拖拽图片到此处</div>
+                        <div class="upload-note">支持JPG/PNG格式，建议图片包含清晰人脸</div>
+                        <input type="file" id="imageInput" accept="image/*" style="display: none">
+                    </div>
+                    <div class="image-preview">
+                        <img src="" alt="图片预览" class="preview-image" id="imagePreview">
+                    </div>
+                    <button class="btn-submit" id="analyzeImage">分析图片</button>
+                </div>
+                <div class="face-result" id="faceResultSection">
+                    <div class="face-item">
+                        <div class="face-emotion"></div>
+                        <div class="face-confidence"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    &lt;!&ndash; 视频分析模态框 &ndash;&gt;-->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>实时视频情绪识别</h3>
+                <button class="close-modal" id="closeVideoModal">&times;</button>
+            </div>
+            <div class="modal-body video-analysis">
+                <div class="video-container">
+                    <div class="video-preview" id="videoPreview">
+                        <video autoplay muted playsinline class="video-element" id="videoElement"></video>
+                        <div class="no-camera" id="noCameraMessage">请允许摄像头权限以使用实时识别功能</div>
+                    </div>
+                    <div class="camera-controls">
+                        <button class="control-btn active" id="resolution640">640×480</button>
+                        <button class="control-btn" id="resolution320">320×240</button>
+                        <button class="control-btn" id="pauseVideo">暂停</button>
+                    </div>
+                </div>
+                <div class="video-emotion" id="videoEmotionSection">
+                    <div class="current-emotion" id="currentEmotion"></div>
+                    <div class="emotion-level" id="emotionLevel">置信度: </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 文本分析模态框相关DOM元素初始化
+        const textModal = document.getElementById('textModal');
+        const textModalTrigger = document.getElementById('textModalTrigger');
+        const closeTextModal = document.getElementById('closeTextModal');
+        const textAnalysisForm = document.getElementById('textAnalysisForm');
+        const textInput = document.getElementById('textInput');
+        const charCount = document.querySelector('.char-count');
+        const textResultSection = document.getElementById('textResultSection');
+        const mainEmotion = document.getElementById('mainEmotion');
+        const confidenceValue = document.querySelector('.confidence-value');
+        const confidenceText = document.querySelector('.confidence-text');
+        const textKeywords = document.getElementById('textKeywords');
+
+        // 情绪样式映射
+        const emotionClasses = {
+            "anger": "text-angry bg-angry-light",
+            "disgust": "text-disgust bg-disgust-light",
+            "fear": "text-fear bg-fear-light",
+            "happy": "text-happy bg-happy-light",
+            "neutral": "text-gray-600 bg-gray-100",
+            "sadness": "text-sad bg-sad-light",
+            "surprise": "text-surprise bg-surprise-light"
+        };
+
+        // 文本模态框控制
+        textModalTrigger.addEventListener('click', () => {
+            textModal.style.display = 'flex';
+            textResultSection.style.display = 'none';
+            textInput.value = '';
+            updateCharCount();
+        });
+
+        closeTextModal.addEventListener('click', () => {
+            textModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === textModal) {
+                textModal.style.display = 'none';
+            }
+        });
+
+        // 字符计数更新
+        textInput.addEventListener('input', updateCharCount);
+
+        function updateCharCount() {
+            const count = textInput.value.length;
+            charCount.textContent = `${count}/100`;
+            if (count > 100) {
+                textInput.value = textInput.value.substring(0, 100);
+                updateCharCount();
+            }
+        }
+
+        // 文本分析表单提交
+        textAnalysisForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = textInput.value.trim();
+            if (!text) {
+                alert('请输入文本内容');
+                return;
+            }
+
+            const submitButton = textAnalysisForm.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i> 分析中...';
+
+            try {
+                const response = await fetch('/api/text/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text().catch(() => '未知错误');
+                    throw new Error(`API请求失败: ${response.status} - ${errorText}`);
+                }
+
+                const data = await response.json();
+                if (data.code === 200) {
+                    const result = data.data;
+                    mainEmotion.textContent = result.label;
+                    const confidence = result.confidence ?? 0; // 空值保护
+                    confidenceValue.style.width = `${confidence * 100}%`;
+                    confidenceText.textContent = `${(confidence * 100).toFixed(1)}% 确定为当前情绪`;
+
+                    // 关键词渲染
+                    textKeywords.innerHTML = '';
+                    if (result.keywords && result.keywords.length > 0) {
+                        result.keywords.forEach(keyword => {
+                            const span = document.createElement('span');
+                            span.className = 'keyword';
+                            span.textContent = keyword;
+                            textKeywords.appendChild(span);
+                        });
+                    } else {
+                        const span = document.createElement('span');
+                        span.className = 'keyword';
+                        span.textContent = '未识别到情绪关键词';
+                        textKeywords.appendChild(span);
+                    }
+
+                    // 情绪样式应用
+                    const emotionClass = emotionClasses[result.label] || emotionClasses["neutral"];
+                    const [emotionTextClass, emotionBgClass] = emotionClass.split(' ');
+                    mainEmotion.className = 'main-emotion ' + emotionTextClass;
+                    textResultSection.className = 'result-section ' + emotionBgClass;
+                    textResultSection.style.display = 'block';
+                } else {
+                    alert(data.message || '文本情绪分析失败');
+                }
+            } catch (error) {
+                console.error('文本情绪分析出错:', error);
+                alert('文本情绪分析出错，请稍后再试');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = '分析情绪';
+                if (textResultSection.style.display === 'block') {
+                    textResultSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+
+        // 图片分析模态框相关DOM元素初始化
+        const imageModal = document.getElementById('imageModal');
+        const imageModalTrigger = document.getElementById('imageModalTrigger');
+        const closeImageModal = document.getElementById('closeImageModal');
+        const imageUploadArea = document.getElementById('imageUploadArea');
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const analyzeImage = document.getElementById('analyzeImage');
+        const faceResultSection = document.getElementById('faceResultSection');
+
+        // 情绪中文映射
+        const emotionCNMap = {
+            "anger": "愤怒", "disgust": "厌恶", "fear": "恐惧",
+            "happy": "高兴", "neutral": "中性", "sadness": "悲伤", "surprise": "惊讶"
+        };
+
+        // 图片模态框控制
+        imageModalTrigger.addEventListener('click', () => {
+            imageModal.style.display = 'flex';
+            imagePreview.src = '';
+            imagePreview.style.display = 'none';
+            faceResultSection.style.display = 'none';
+        });
+
+        closeImageModal.addEventListener('click', () => {
+            imageModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === imageModal) {
+                imageModal.style.display = 'none';
+            }
+        });
+
+        // 图片上传处理
+        imageUploadArea.addEventListener('click', () => {
+            imageInput.click();
+        });
+
+        imageInput.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    imagePreview.src = event.target.result;
+                    imagePreview.style.display = 'block';
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+
+        // 图片分析处理
+        analyzeImage.addEventListener('click', async () => {
+            if (!imagePreview.src) {
+                alert('请先上传图片');
+                return;
+            }
+
+            analyzeImage.disabled = true;
+            analyzeImage.innerHTML = '<i class="fa fa-spinner fa-spin"></i> 分析中...';
+
+            try {
+                const formData = new FormData();
+                const file = imageInput.files[0];
+                formData.append('image', file);
+
+                const response = await fetch('/api/image/analyze', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text().catch(() => '未知错误');
+                    throw new Error(`API请求失败: ${response.status} - ${errorText}`);
+                }
+
+                const data = await response.json();
+                if (data.code === 200) {
+                    const result = data.data;
+                    faceResultSection.innerHTML = '';
+                    const overallConfidence = result.confidence ?? 0; // 整体置信度
+
+                    result.face_details.forEach(face => {
+                        const faceItem = document.createElement('div');
+                        faceItem.className = 'face-item';
+
+                        const faceEmotion = document.createElement('div');
+                        faceEmotion.className = 'face-emotion';
+                        faceEmotion.textContent = face.emotion;
+
+                        const faceConfidence = document.createElement('div');
+                        faceConfidence.className = 'face-confidence';
+                        faceConfidence.textContent = `置信度: ${(overallConfidence * 100).toFixed(2)}%`;
+
+                        faceItem.appendChild(faceEmotion);
+                        faceItem.appendChild(faceConfidence);
+                        faceResultSection.appendChild(faceItem);
+                    });
+
+                    faceResultSection.style.display = 'block';
+                } else {
+                    alert(data.message || '图片情绪分析失败');
+                }
+            } catch (error) {
+                console.error('图片情绪分析出错:', error);
+                alert('图片情绪分析出错，请稍后再试');
+            } finally {
+                analyzeImage.disabled = false;
+                analyzeImage.innerHTML = '分析图片';
+                if (faceResultSection.style.display === 'block') {
+                    faceResultSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+
+        // 视频分析模态框相关DOM元素初始化
+        const videoModal = document.getElementById('videoModal');
+        const videoModalTrigger = document.getElementById('videoModalTrigger');
+        const closeVideoModal = document.getElementById('closeVideoModal');
+        const videoElement = document.getElementById('videoElement');
+        const noCameraMessage = document.getElementById('noCameraMessage');
+        const resolution640 = document.getElementById('resolution640');
+        const resolution320 = document.getElementById('resolution320');
+        const pauseVideo = document.getElementById('pauseVideo');
+        const videoEmotionSection = document.getElementById('videoEmotionSection');
+        const currentEmotion = document.getElementById('currentEmotion');
+        const emotionLevel = document.getElementById('emotionLevel');
+
+        // 新增：定义情绪映射关系
+        const emotionMap = {
+            'fear': { text: '恐惧', level: '高唤醒低强度' },
+            'anger': { text: '愤怒', level: '高唤醒高强度' },
+            'disgust': { text: '厌恶', level: '中等强度' },
+            'happy': { text: '高兴', level: '高唤醒高强度' },
+            'neutral': { text: '中性', level: '无明显情绪' },
+            'sadness': { text: '悲伤', level: '低唤醒低强度' },
+            'surprise': { text: '惊讶', level: '高唤醒中等强度' }
+        };
+
+        // 新增：更新视频分析结果展示
+        function updateVideoAnalysisResult(emotion) {
+            if (emotionMap[emotion]) {
+                currentEmotion.textContent = emotionMap[emotion].text;
+                emotionLevel.textContent = emotionMap[emotion].level;
+
+                // 添加动态样式更新，根据情绪类型改变颜色
+                Object.keys(emotionMap).forEach(key => {
+                    currentEmotion.classList.remove(`text-${key}`);
+                    emotionLevel.classList.remove(`bg-${key}-light`);
+                });
+
+                currentEmotion.classList.add(`text-${emotion}`);
+                emotionLevel.classList.add(`bg-${emotion}-light`);
+            } else {
+                currentEmotion.textContent = '未知';
+                emotionLevel.textContent = '无法识别';
+                currentEmotion.classList.remove(...Array.from(currentEmotion.classList).filter(c => c.startsWith('text-')));
+                emotionLevel.classList.remove(...Array.from(emotionLevel.classList).filter(c => c.startsWith('bg-')));
+            }
+        }
+
+        // 创建用于绘制的canvas元素
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        videoElement.parentNode.appendChild(canvas);
+        canvas.style.position = 'absolute';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.pointerEvents = 'none';
+
+        let animationFrameId = null;
+        let mediaRecorder = null;
+        let recordedBlobs = [];
+        let currentResolution = '640×480';
+        let isPaused = false;
+        let isRecording = false;
+        let detectionInterval = 1000; // 每秒检测一次
+        let lastDetectionTime = 0;
+
+        // 实时处理视频帧
+        function processVideoFrame(timestamp) {
+            if (!videoElement.srcObject || isPaused) {
+                animationFrameId = requestAnimationFrame(processVideoFrame);
+                return;
+            }
+
+            // 调整canvas尺寸
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+
+            // 每隔一段时间进行人脸检测和情绪分析
+            if (timestamp - lastDetectionTime > detectionInterval) {
+                lastDetectionTime = timestamp;
+
+                // 将视频帧绘制到canvas上以便获取图像数据
+                ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+                // 发送图像数据到后端进行分析
+                sendFrameForAnalysis(imageData);
+            }
+
+            animationFrameId = requestAnimationFrame(processVideoFrame);
+        }
+
+        // 发送视频帧到后端进行分析
+        async function sendFrameForAnalysis(imageData) {
+            try {
+                // 将Canvas图像转换为Blob并上传
+                canvas.toBlob(async (blob) => {
+                    const formData = new FormData();
+                    formData.append('frame', blob);
+
+                    const response = await fetch('/api/video/analyze_frame', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('网络响应失败');
+                    }
+
+                    const data = await response.json();
+
+                    if (data.code === 200 && data.data.face_details.length > 0) {
+                        const result = data.data;
+
+                        // 更新情绪显示
+                        const emotionClass = result.emotion_class;
+                        updateVideoAnalysisResult(emotionClass);
+
+                        // 绘制人脸边界框
+                        drawFaceBoundingBox(result.face_details[0].bounding_box);
+                    }
+                }, 'image/jpeg', 0.7); // 使用JPEG格式，质量0.7
+            } catch (error) {
+                console.error('发送视频帧出错:', error);
+            }
+        }
+
+        // 绘制人脸边界框
+        function drawFaceBoundingBox(bbox) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = '#FFC107'; // 框选颜色
+            ctx.lineWidth = 2;
+            ctx.strokeRect(...bbox);
+
+            // 在边界框上方绘制加载动画
+            const [x, y, w] = bbox;
+            const rectHeight = 20;
+            const progress = (Date.now() % 1000) / 1000;
+
+            ctx.fillStyle = 'rgba(255, 193, 7, 0.8)';
+            ctx.fillRect(x, y - rectHeight - 5, w * progress, rectHeight);
+        }
+
+        // 启动摄像头
+        function startVideo() {
+            if (videoElement.srcObject) {
+                stopVideo();
+            }
+
+            navigator.mediaDevices.getUserMedia({
+                video: {
+                    width: { ideal: currentResolution.split('×')[0] },
+                    height: { ideal: currentResolution.split('×')[1] }
+                }
+            })
+            .then(stream => {
+                videoElement.srcObject = stream;
+                videoElement.play();
+                noCameraMessage.style.display = 'none';
+                videoEmotionSection.style.display = 'block';
+
+                // 开始处理视频帧
+                animationFrameId = requestAnimationFrame(processVideoFrame);
+
+                // 初始化媒体录制器
+                recordedBlobs = [];
+                mediaRecorder = new MediaRecorder(stream);
+
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        recordedBlobs.push(event.data);
+                    }
+                };
+
+                mediaRecorder.start(1000); // 每秒收集一次数据
+                isRecording = true;
+                console.log("开始录制视频...");
+            })
+            .catch(error => {
+                console.error('摄像头权限拒绝:', error);
+                noCameraMessage.style.display = 'block';
+            });
+        }
+
+        // 停止录制并上传视频
+        function stopVideo() {
+            if (videoElement.srcObject) {
+                videoElement.srcObject.getTracks().forEach(track => track.stop());
+                videoElement.srcObject = null;
+            }
+
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+                console.log("停止录制视频");
+
+                setTimeout(() => {
+                    if (recordedBlobs.length === 0 || recordedBlobs[0].size === 0) {
+                        alert("视频录制失败，请重试（确保摄像头正常工作且已授权）");
+                        return;
+                    }
+
+                    const videoBlob = new Blob(recordedBlobs, { type: mediaRecorder.mimeType || 'video/webm' });
+                    uploadVideo(videoBlob);
+                }, 500);
+            }
+        }
+
+        // 上传视频到后端
+        function uploadVideo(blob) {
+            const formData = new FormData();
+            formData.append('video', blob, `recording.${blob.type.includes('mp4') ? 'mp4' : 'webm'}`);
+
+            fetch('/api/video/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 200) {
+                    console.log("视频上传并处理成功");
+                } else {
+                    console.error("视频处理失败:", data.message);
+                }
+            })
+            .catch(error => console.error("上传错误:", error));
+        }
+
+        // 绑定事件
+        videoModalTrigger.addEventListener('click', () => {
+            videoModal.style.display = 'flex';
+            startVideo();
+        });
+
+        closeVideoModal.addEventListener('click', () => {
+            stopVideo();
+            videoModal.style.display = 'none';
+        });
+
+        // 分辨率切换
+        resolution640.addEventListener('click', () => {
+            if (!isRecording) {
+                currentResolution = '640×480';
+                resolution640.classList.add('active');
+                resolution320.classList.remove('active');
+                return;
+            }
+
+            if (isRecording) {
+                stopVideo();
+                setTimeout(() => {
+                    currentResolution = '640×480';
+                    resolution640.classList.add('active');
+                    resolution320.classList.remove('active');
+                    startVideo();
+                }, 500);
+            }
+        });
+
+        resolution320.addEventListener('click', () => {
+            if (!isRecording) {
+                currentResolution = '320×240';
+                resolution320.classList.add('active');
+                resolution640.classList.remove('active');
+                return;
+            }
+
+            if (isRecording) {
+                stopVideo();
+                setTimeout(() => {
+                    currentResolution = '320×240';
+                    resolution320.classList.add('active');
+                    resolution640.classList.remove('active');
+                    startVideo();
+                }, 500);
+            }
+        });
+
+        // 暂停/继续
+        pauseVideo.addEventListener('click', () => {
+            isPaused = !isPaused;
+            if (isPaused) {
+                stopVideo();
+                pauseVideo.textContent = '继续';
+            } else {
+                startVideo();
+                pauseVideo.textContent = '暂停';
+            }
+        });
+
+        // 页面初始化
+        window.onload = () => {
+            resolution640.classList.add('active');
+            mainEmotion.className = 'main-emotion text-happy';
+            textResultSection.className = 'result-section bg-happy-light';
+        };
+    </script>
+</body>
+</html>

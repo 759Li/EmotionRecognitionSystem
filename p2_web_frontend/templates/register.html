@@ -1,0 +1,360 @@
+<!--
+文件功能：用户注册页面模板，用于实现情绪识别系统的注册交互
+编写日期：2025年07月
+班级：物联一班
+学号：202378040109
+作者：李正标
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>注册 - 情绪识别系统</title>
+    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet"><!-- Font-awesome-CSS -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel='stylesheet' type='text/css'/><!-- style.css -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <style>
+        /* 继承登录页核心样式，保持视觉统一 */
+        .main-agile {
+            width: 35%;
+            margin: 50px auto;
+            background: rgba(0, 0, 0, 0.22);
+            padding: 30px;
+            position: relative;
+            box-shadow: 5px 5px 7px 0 rgba(0, 0, 0, 0.12);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #000;
+            font-size: 16px;
+        }
+
+        .input-with-icon input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid #fff;
+            outline: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            box-sizing: border-box;
+        }
+
+        .toggle-tabs {
+            display: flex;
+            margin: 25px 0;
+            border: 1px solid #fff;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .toggle-tabs button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-tabs button.active {
+            background: #19b9cc;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .btn-code {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-code input {
+            flex: 1;
+        }
+
+        .btn-code button {
+            white-space: nowrap;
+            padding: 0 20px;
+            background: #19b9cc;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-code button:hover {
+            background: #00e5ff;
+        }
+
+        .terms {
+            margin: 15px 0;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .terms a {
+            color: #19b9cc;
+            text-decoration: underline;
+        }
+
+        .register-btn {
+            width: 100%;
+            background: #19b9cc;
+            border: none;
+            padding: 14px 0;
+            color: #fff;
+            font-size: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.5s;
+            margin-top: 10px;
+        }
+
+        .register-btn:hover {
+            background: #00e5ff;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #19b9cc;
+            text-decoration: underline;
+        }
+
+        .error-hint {
+            color: #ff4d4d;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .main-agile {
+                width: 80%;
+                padding: 20px;
+            }
+
+            .btn-code {
+                flex-direction: column;
+            }
+
+            .btn-code button {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- 导航栏 - 与登录页完全一致 -->
+<nav class="navbar navbar-expand-xl">
+    <div class="container h-100">
+        <a class="navbar-brand" href="recognition.html">
+            <h1 class="tm-site-title mb-0">七情六欲</h1>
+        </a>
+    </div>
+</nav>
+<!-- 显示 flash 消息 -->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div style="color: red; padding: 10px; background: white; margin-bottom: 20px;">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+<!-- 注册表单卡片 - 沿用登录页深色半透明风格 -->
+<div class="main-agile">
+    <div class="alert-close"></div>
+    <div class="content-wthree">
+        <h2 style="color: #fff; text-align: center; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;">注册账号</h2>
+
+        <form id="registerForm" method="POST" action="/register">
+            <!-- 用户名 -->
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <div class="input-with-icon">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <input type="text" id="username" name="username" placeholder="请输入用户名" required>
+                </div>
+                <div class="error-hint" id="usernameError">用户名已存在</div>
+            </div>
+
+            <!-- 密码 -->
+            <div class="form-group">
+                <label for="password">密码</label>
+                <div class="input-with-icon">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                    <input type="password" id="password" name="password" placeholder="请输入密码" required>
+                </div>
+                <div class="error-hint" id="passwordError">密码长度至少8位</div>
+            </div>
+
+            <!-- 确认密码 -->
+            <div class="form-group">
+                <label for="confirmPassword">确认密码</label>
+                <div class="input-with-icon">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                    <input type="password" id="confirmPassword" name="confirm_password" placeholder="请再次输入密码"
+                           required>
+                </div>
+                <div class="error-hint" id="confirmError">两次密码不一致</div>
+            </div>
+
+            <!-- 邮箱注册表单 -->
+            <div class="form-group btn-code">
+                <div class="input-with-icon" style="flex: 1;">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                    <input type="email" id="email" name="email" placeholder="请输入邮箱" required>
+                </div>
+                <button type="button" id="sendEmailCode">获取验证码</button>
+            </div>
+            <div class="form-group">
+                <label for="emailCode">验证码</label>
+                <div class="input-with-icon">
+                    <i class="fa fa-shield" aria-hidden="true"></i>
+                    <input type="text" id="emailCode" name="verification_code" placeholder="请输入验证码" required>
+                </div>
+            </div>
+
+            <!-- 注册按钮 - 与登录页按钮样式统一 -->
+            <button type="submit" class="register-btn">注册</button>
+
+            <!-- 已有账号链接 -->
+            <div class="login-link">
+                已有账号？<a href="/login">立即登录</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 页脚 - 与登录页完全一致 -->
+<div class="footer-w3l">
+    <p class="agileinfo"> &copy; 2025 七情六欲项目组. 基于深度学习的情绪识别系统 </p>
+</div>
+
+<script>
+    // 移除所有与手机号相关的脚本
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const passwordError = document.getElementById('passwordError');
+    const confirmError = document.getElementById('confirmError');
+
+    password.addEventListener('input', () => {
+    const hasLetter = /[a-zA-Z]/.test(password.value);
+    const hasNumber = /\d/.test(password.value);
+    if (password.value.length < 8) {
+        passwordError.textContent = '密码长度至少8位';
+        passwordError.style.display = 'block';
+    } else if (!hasLetter || !hasNumber) {
+        passwordError.textContent = '密码需包含字母和数字'; // 新增提示
+        passwordError.style.display = 'block';
+    } else {
+        passwordError.style.display = 'none';
+        checkConfirm();
+    }
+});
+
+    confirmPassword.addEventListener('input', checkConfirm);
+
+    function checkConfirm() {
+        if (password.value !== confirmPassword.value) {
+            confirmError.style.display = 'block';
+        } else {
+            confirmError.style.display = 'none';
+        }
+    }
+
+    // 验证码倒计时功能
+    const sendEmailCodeBtn = document.getElementById('sendEmailCode');
+    if (sendEmailCodeBtn) {
+        let isSending = false;
+        sendEmailCodeBtn.addEventListener('click', () => {
+            if (isSending) return;
+            const email = document.getElementById('email').value;
+            if (!email) {
+                alert('请输入邮箱地址');
+                return;
+            }
+            isSending = true;
+            let countdown = 60;
+            sendEmailCodeBtn.disabled = true;
+            sendEmailCodeBtn.textContent = `${countdown}秒后重试`;
+
+            fetch('/send-verification-code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    type: 'register'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 200) {
+                    alert('验证码已发送，请查收邮件');
+                } else {
+                    alert('验证码可能已发送，请检查邮箱，若未收到请重试');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.message || '验证码发送失败，请稍后再试');
+                isSending = false;
+                sendEmailCodeBtn.disabled = false;
+                sendEmailCodeBtn.textContent = '获取验证码';
+            });
+
+            const timer = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    sendEmailCodeBtn.textContent = `${countdown}秒后重试`;
+                } else {
+                    clearInterval(timer);
+                    isSending = false;
+                    sendEmailCodeBtn.disabled = false;
+                    sendEmailCodeBtn.textContent = '获取验证码';
+                }
+            }, 1000);
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,1117 @@
+<!--
+文件功能：历史记录页面模板，展示用户情绪识别的历史数据列表和筛选功能
+编写日期：2025年07月
+班级：物联一班
+学号：202378040109
+作者：李正标
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>历史 - 情绪识别系统</title>
+    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <style>
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(22, 93, 255, 0.9);
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .logo i {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        .nav-links li {
+            margin: 0 15px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #FFC107;
+        }
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        .user-actions a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .user-actions a i {
+            margin-right: 5px;
+        }
+        .main-content {
+            margin-top: 80px;
+            padding: 40px 20px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 80px auto 40px;
+        }
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .page-title h1 {
+            font-size: 32px;
+            color: #165DFF;
+            margin-bottom: 10px;
+        }
+        .page-title p {
+            font-size: 16px;
+            color: #555;
+        }
+        .filter-section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .filter-col {
+            flex: 1;
+            min-width: 250px;
+        }
+        .filter-label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 15px;
+            color: #555;
+        }
+        .filter-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            appearance: none;
+            background: url('data:image/svg+xml;charset=US-ASCII,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z" fill="%23555" /></svg>') no-repeat right 10px center;
+            background-size: 12px;
+        }
+        .filter-input {
+            width: 100%;
+            min-width: 250px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .filter-btn {
+            background: #165DFF;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .filter-btn:hover {
+            background: #0D47A1;
+        }
+        .record-list {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .record-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .record-header h3 {
+            font-size: 22px;
+            color: #333;
+            margin: 0;
+        }
+        .record-count {
+            font-size: 14px;
+            color: #666;
+        }
+        .record-items {
+            padding: 0;
+            list-style: none;
+        }
+        .record-item {
+            padding: 20px 30px;
+            border-bottom: 1px solid #f5f5f5;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        .record-item:hover {
+            background: #f8f9fa;
+        }
+        .record-item:last-child {
+            border-bottom: none;
+        }
+        .record-type {
+            width: 10%;
+            min-width: 60px;
+            text-align: center;
+        }
+        .record-type-icon {
+            font-size: 24px;
+            color: #165DFF;
+        }
+        .record-content {
+            width: 35%;
+            min-width: 200px;
+            margin-right: 20px;
+        }
+        .record-emotion {
+            width: 20%;
+            min-width: 120px;
+            text-align: center;
+        }
+        .record-time {
+            width: 20%;
+            min-width: 120px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+        .record-actions {
+            width: 15%;
+            min-width: 100px;
+            text-align: right;
+        }
+        .emotion-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #202020;
+            margin-bottom: 5px;
+        }
+        .confidence-level {
+            font-size: 13px;
+            color: #666;
+        }
+        .action-btn {
+            background: none;
+            border: none;
+            color: #165DFF;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .action-btn i {
+            font-size: 16px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .modal-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 {
+            font-size: 22px;
+            color: #333;
+            margin: 0;
+        }
+        .close-modal {
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+            background: none;
+            border: none;
+            outline: none;
+        }
+        .modal-body {
+            padding: 30px;
+        }
+        .record-detail {
+            margin-top: 20px;
+        }
+        .detail-section {
+            margin-bottom: 30px;
+        }
+        .detail-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .detail-content {
+            padding: 15px;
+            border-radius: 5px;
+            background: #f8f9fa;
+        }
+        .detail-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+        }
+        .detail-image {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        .emotion-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .emotion-detail {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px;
+            border-radius: 5px;
+            background: #f0f7ff;
+            border-left: 3px solid #165DFF;
+        }
+        .emotion-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .emotion-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #165DFF;
+        }
+        .action-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        .download-btn, .share-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+        .download-btn {
+            background: #165DFF;
+            color: white;
+        }
+        .download-btn:hover {
+            background: #0D47A1;
+        }
+        .share-btn {
+            background: #f0f0f0;
+            color: #555;
+        }
+        .share-btn:hover {
+            background: #e0e0e0;
+        }
+        .footer {
+            background: #013ca6;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        .footer p {
+            margin: 0;
+            font-size: 15px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            gap: 15px;
+        }
+        .pagination-btn {
+            padding: 8px 16px;
+            border: 1px solid #165DFF;
+            background: white;
+            color: #165DFF;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .pagination-btn:hover:not(:disabled) {
+            background: #165DFF;
+            color: white;
+        }
+        .page-info {
+            font-size: 16px;
+            color: #333;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #165DFF;
+        }
+        .error-message {
+            color: #ff4d4d;
+            text-align: center;
+            padding: 10px;
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+            }
+            .filter-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .filter-col {
+                min-width: 100%;
+            }
+            .record-item {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+            .record-type, .record-content, .record-emotion, .record-time, .record-actions {
+                width: 100%;
+                text-align: center;
+            }
+            .record-actions {
+                text-align: center;
+                margin-top: 10px;
+            }
+            .pagination {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav-bar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa fa-shield" aria-hidden="true"></i>
+                <span>七情六欲</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/recognition">情绪识别</a></li>
+                <li><a href="/history" style="color: #FFC107; font-weight: bold;">历史记录</a></li>
+                <li><a href="/dashboard">数据看板</a></li>
+                <li><a href="/user">用户中心</a></li>
+            </ul>
+            <div class="user-actions">
+                <a href="#"><i class="fa fa-bell" aria-hidden="true"></i></a>
+                <a href="/"><i class="fa fa-sign-out" aria-hidden="true"></i>退出</a>
+            </div>
+        </div>
+    </div>
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <!-- 页面标题区 -->
+        <div class="page-title">
+            <h1>情绪历史记录</h1>
+            <p>查看所有情绪识别记录，支持时间范围和情绪类型筛选</p>
+        </div>
+        <!-- 筛选区域 -->
+        <div class="filter-section">
+            <div class="filter-row">
+                <div class="filter-col">
+                    <label class="filter-label">时间范围</label>
+                    <select class="filter-select" id="timeRange">
+                        <option value="all">全部记录</option>
+                        <option value="week">本周</option>
+                        <option value="month">本月</option>
+                    </select>
+                </div>
+                <div class="filter-col">
+                    <label class="filter-label">情绪类型</label>
+                    <select class="filter-select" id="emotionType">
+                        <option value="all">所有情绪</option>
+                        <option value="happy">喜悦</option>
+                        <option value="anger">生气</option>
+                        <option value="sadness">伤心</option>
+                        <option value="fear">害怕</option>
+                        <option value="disgust">厌恶</option>
+                        <option value="surprise">惊讶</option>
+                        <option value="neutral">自然</option>
+                    </select>
+                </div>
+                <div class="filter-col">
+                    <label class="filter-label">数据类型</label>
+                    <select class="filter-select" id="dataType">
+                        <option value="all">所有类型</option>
+                        <option value="text">文本分析</option>
+                        <option value="image">图片识别</option>
+                        <option value="video">视频识别</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-row">
+                <button class="filter-btn" id="applyFilters">
+                    <i class="fa fa-filter" aria-hidden="true"></i> 应用筛选
+                </button>
+                <button class="filter-btn" style="background: #f0f0f0; color: #555;" id="resetFilters">
+                    <i class="fa fa-refresh" aria-hidden="true"></i> 重置筛选
+                </button>
+            </div>
+        </div>
+        <!-- 加载状态提示 -->
+        <div class="loading" id="loadingIndicator">
+            <i class="fa fa-spinner fa-spin" aria-hidden="true"></i> 加载中...
+        </div>
+        <!-- 错误提示 -->
+        <div class="error-message" id="errorMessage"></div>
+        <!-- 记录列表区域 -->
+        <ul class="record-list">
+            <li class="record-header">
+                <h3>情绪识别记录</h3>
+                <div class="record-count">共 {{ recognition_history|length }} 条记录</div>
+            </li>
+            {% for record in recognition_history %}
+            <li class="record-item" data-id="{{ record.id }}">
+                <div class="record-type">
+                    {% if record.type_name == 'text' %}
+                    <i class="fa fa-file-text-o record-type-icon" aria-hidden="true"></i>
+                    {% elif record.type_name == 'image' %}
+                    <i class="fa fa-image record-type-icon" aria-hidden="true"></i>
+                    {% elif record.type_name == 'video' %}
+                    <i class="fa fa-video-camera record-type-icon" aria-hidden="true"></i>
+                    {% endif %}
+                </div>
+                <div class="record-content">
+                    <div class="record-text">
+                        {% if record.type_name == 'text' %}
+                        {{ record.text_content }}
+                        {% elif record.type_name == 'image' %}
+                        图片识别记录
+                        {% elif record.type_name == 'video' %}
+                        视频识别记录
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="record-emotion">
+                    <div class="emotion-tag emotion-{{ record.emotion_class|lower }}">
+                        {% if record.emotion_class == 'anger' %}愤怒
+                        {% elif record.emotion_class == 'disgust' %}厌恶
+                        {% elif record.emotion_class == 'fear' %}恐惧
+                        {% elif record.emotion_class == 'happy' %}喜悦
+                        {% elif record.emotion_class == 'neutral' %}中性
+                        {% elif record.emotion_class == 'sadness' %}悲伤
+                        {% elif record.emotion_class == 'surprise' %}惊讶
+                        {% else %}{{ record.emotion_class }}{% endif %}
+                    </div>
+                    <div class="confidence-level">置信度: {{ record.confidence * 100 }}%</div>
+                </div>
+                <div class="record-time">{{ record.created_at }}</div>
+                <div class="record-actions">
+                    <button class="action-btn" data-id="{{ record.id }}">
+                        <i class="fa fa-eye" aria-hidden="true"></i> 查看详情
+                    </button>
+                    <button class="action-btn delete-btn" data-id="{{ record.id }}">
+                        <i class="fa fa-trash"></i> 删除
+                    </button>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <!-- 分页控件 -->
+        <div class="pagination">
+            <button class="pagination-btn" id="prevPage">上一页</button>
+            <span class="page-info" id="pageInfo">第 1 页</span>
+            <button class="pagination-btn" id="nextPage">下一页</button>
+        </div>
+        <!-- 记录详情模态框 -->
+        <div class="modal" id="recordModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>情绪识别记录详情</h3>
+                    <button class="close-modal" id="closeRecordModal">&times;</button>
+                </div>
+                <div class="modal-body record-detail">
+    <!-- 数据类型 -->
+    <div class="detail-section" id="detailType">
+        <div class="detail-title">数据类型: <span id="detailDataType">文本分析</span></div>
+        <div class="detail-content" id="detailDataContent">
+            <!-- 文本内容 -->
+            <div class="detail-text" id="detailTextContent"></div>
+            <!-- 图片/视频帧预览 -->
+            <img src="" alt="识别内容预览" id="detailImageContent" style="display: none; max-width:100%; border-radius:5px;">
+        </div>
+    </div>
+
+    <!-- 情绪、置信度、时间 -->
+    <div class="detail-section">
+        <div class="detail-title">主要情绪: <span id="mainEmotionValue"></span></div>
+        <div class="detail-title">置信度: <span id="confidenceValue"></span></div>
+        <div class="detail-title">识别时间: <span id="detectionTime"></span></div>
+    </div>
+                    <div class="action-buttons">
+                        <button class="download-btn" id="downloadReportBtn">
+                            <i class="fa fa-download"></i> 下载报告
+                        </button>
+                        <button class="share-btn" id="shareRecordBtn">
+                            <i class="fa fa-share-alt"></i> 分享记录
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 删除确认模态框 -->
+        <div class="modal" id="deleteModal">
+            <div class="modal-content" style="width: 500px;">
+                <div class="modal-header">
+                    <h3>确认删除</h3>
+                    <button class="close-modal" id="closeDeleteModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>确定要删除这条记录吗？此操作不可恢复。</p>
+                    <button class="filter-btn" id="confirmDelete">确认删除</button>
+                </div>
+            </div>
+        </div>
+        <!-- 页脚 -->
+        <div class="footer">
+            <p>© 2025 七情六欲项目组. 基于深度学习的人脸情绪识别系统</p>
+        </div>
+    </div>
+    <script>
+        // 全局变量存储当前查看的记录ID
+        let currentRecordId = null;
+
+        // 情绪类别映射表（英文转中文）
+        const emotionMap = {
+  "happy": "喜悦",
+  "anger": "愤怒",
+  "disgust": "厌恶",
+  "fear": "恐惧",
+  "sadness": "悲伤",
+  "surprise": "惊讶",
+  "neutral": "中性",
+  "unknown": "未知情绪",
+  "解析失败": "解析失败"
+};
+
+        // 分页参数
+        let currentPage = 1;
+        const pageSize = 10;
+        let totalRecords = parseInt("{{ recognition_history|length }}");
+
+        // DOM元素获取
+        const recordModal = document.getElementById('recordModal');
+        const recordItems = document.querySelectorAll('.record-item');
+        const closeRecordModal = document.getElementById('closeRecordModal');
+        const detailDataType = document.getElementById('detailDataType');
+        const detailDataContent = document.getElementById('detailDataContent');
+        const detailTextContent = document.getElementById('detailTextContent');
+        const detailImageContent = document.getElementById('detailImageContent');
+        const mainEmotionValue = document.getElementById('mainEmotionValue');
+        const confidenceValue = document.getElementById('confidenceValue');
+        const detectionTime = document.getElementById('detectionTime');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const errorMessage = document.getElementById('errorMessage');
+        const downloadReportBtn = document.getElementById('downloadReportBtn');
+        const shareRecordBtn = document.getElementById('shareRecordBtn');
+
+        // 记录项点击事件
+        recordItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (e.target.closest('.action-btn') || e.target.closest('.record-item')) {
+                    const recordId = item.dataset.id;
+                    currentRecordId = recordId; // 保存当前记录ID
+                    openRecordDetail(recordId);
+                }
+            });
+        });
+
+        // 删除按钮事件
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const recordId = btn.dataset.id;
+
+                // 绑定确认删除按钮的点击事件
+                document.getElementById('confirmDelete').onclick = () => {
+                    fetch(`/api/history/delete/${recordId}`, { method: 'DELETE' })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.code === 200) {
+                                // 移除页面上的记录项
+                                btn.closest('.record-item').remove();
+                                // 关闭删除确认模态框
+                                document.getElementById('deleteModal').style.display = 'none';
+                                // 显示删除成功提示
+                                alert('记录已成功删除');
+                            } else {
+                                // 显示删除失败提示（包含错误原因）
+                                alert(`删除失败: ${data.message || '未知错误'}`);
+                            }
+                        })
+                        .catch(err => {
+                            // 捕获网络错误等异常
+                            console.error('删除请求失败:', err);
+                            alert('删除请求失败，请检查网络后重试');
+                        });
+                };
+
+                // 显示删除确认模态框
+                document.getElementById('deleteModal').style.display = 'flex';
+            });
+        });
+
+        // 关闭删除模态框
+        document.getElementById('closeDeleteModal').addEventListener('click', () => {
+            document.getElementById('deleteModal').style.display = 'none';
+        });
+
+        // 打开记录详情
+       function openRecordDetail(recordId) {
+    showLoading();
+    $.ajax({
+        url: `/api/recognition_detail/${recordId}`,
+        method: 'GET',
+        success: function (response) {
+            hideLoading();
+            if (response.code === 200) {
+                const recordData = response.data;
+
+                // 1. 更新【数据类型】
+                detailDataType.textContent = recordData.type_name;
+
+                // 2. 清空模态框内的内容区域（文本/图片）
+                const detailTextContent = document.getElementById('detailTextContent');
+                const detailImageContent = document.getElementById('detailImageContent');
+                detailTextContent.textContent = '';  // 清空文本
+                detailImageContent.src = '';         // 清空图片
+                detailImageContent.style.display = 'none'; // 隐藏图片
+
+                // 3. 根据数据类型填充内容（文本/图片/视频帧）
+                if (recordData.type_name === 'image') {
+                    detailImageContent.src = `/api/resources/${recordData.image_path}`;
+                    detailImageContent.style.display = 'block'; // 显示图片
+                } else if (recordData.type_name === 'video') {
+                    const framePath = recordData.result?.face_details?.[0]?.frame_path || '';
+                    if (framePath) {
+                        detailImageContent.src = `/api/resources/${framePath}`;
+                        detailImageContent.style.display = 'block';
+                    }
+                } else if (recordData.type_name === 'text') {
+                    detailTextContent.textContent = recordData.text_content; // 填充文本
+                }
+
+                // 4. 更新【情绪、置信度、时间】
+                const emotionClass = recordData.emotion_class || recordData.result?.emotion_class || "unknown";
+                mainEmotionValue.textContent = emotionMap[emotionClass.toLowerCase()] || emotionMap["unknown"];
+                confidenceValue.textContent = (recordData.confidence * 100).toFixed(2) + '%';
+                detectionTime.textContent = recordData.created_at;
+
+                // 显示模态框
+                recordModal.style.display = 'flex';
+            } else {
+                showError(response.message || '获取记录详情失败');
+            }
+        },
+        error: function (error) {
+            hideLoading();
+            showError('获取记录详情失败，请稍后重试');
+            console.error('API请求失败:', error); // 调试用
+        }
+    });
+}
+
+        // 下载报告按钮事件
+        downloadReportBtn.addEventListener('click', () => {
+            if (currentRecordId) {
+                window.location.href = `/api/download_report/${currentRecordId}`;
+            }
+        });
+
+        // 分享记录按钮事件
+        shareRecordBtn.addEventListener('click', () => {
+            if (currentRecordId) {
+                copyShareLink(currentRecordId);
+            }
+        });
+
+        // 复制分享链接
+        function copyShareLink(recordId) {
+            fetch(`/api/generate_share_token/${recordId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code === 200) {
+                        const shareUrl = `${window.location.origin}/share/${data.token}`;
+
+                        // 使用 Clipboard API（现代浏览器）尝试复制
+                        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+                            navigator.clipboard.writeText(shareUrl)
+                                .then(() => alert('分享链接已复制到剪贴板！'))
+                                .catch(err => {
+                                    console.error('Clipboard API 失败:', err);
+                                    fallbackCopy(shareUrl); // 降级到旧方法
+                                });
+                        } else {
+                            // 回退到旧方法：创建临时文本框进行复制
+                            fallbackCopy(shareUrl);
+                        }
+                    } else {
+                        alert(`生成分享链接失败：${data.message}`);
+                    }
+                })
+                .catch(err => {
+                    console.error('请求失败:', err);
+                    alert('生成分享链接失败，请稍后重试');
+                });
+        }
+
+        // 旧浏览器兼容的复制方法
+        function fallbackCopy(text) {
+            const tempInput = document.createElement('input');
+            document.body.appendChild(tempInput);
+            tempInput.value = text;
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999); // 适配移动设备
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    alert('分享链接已复制到剪贴板！');
+                } else {
+                    throw new Error('复制失败');
+                }
+            } catch (err) {
+                console.error('手动复制失败:', err);
+                alert(`请手动复制链接：\n${text}`);
+            } finally {
+                document.body.removeChild(tempInput);
+            }
+        }
+
+        // 关闭记录模态框
+        closeRecordModal.addEventListener('click', () => {
+            recordModal.style.display = 'none';
+            detailTextContent.textContent = '';
+            detailImageContent.src = '';
+            detailImageContent.style.display = 'none';
+        });
+
+        // 点击模态框外部关闭
+        window.addEventListener('click', (e) => {
+            if (e.target === recordModal) {
+                recordModal.style.display = 'none';
+                detailTextContent.textContent = '';
+                detailImageContent.src = '';
+                detailImageContent.style.display = 'none';
+            }
+        });
+
+        // 筛选功能
+        const applyFilters = document.getElementById('applyFilters');
+        const resetFilters = document.getElementById('resetFilters');
+
+        applyFilters.addEventListener('click', () => {
+            currentPage = 1;
+            applyFiltersWithPage(currentPage);
+        });
+
+        function applyFiltersWithPage(page) {
+            showLoading();
+            hideError();
+            const timeRange = document.getElementById('timeRange').value;
+            const emotionType = document.getElementById('emotionType').value;
+            const dataType = document.getElementById('dataType').value;
+
+            const params = {
+                timeRange: timeRange,
+                emotionType: emotionType,
+                dataType: dataType,
+                limit: pageSize,
+                offset: (page - 1) * pageSize
+            };
+
+            if (timeRange === 'custom') {
+                params.startTime = document.getElementById('startTime').value;
+                params.endTime = document.getElementById('endTime').value;
+            }
+
+            $.ajax({
+                url: `/api/history_filter`,
+                method: 'GET',
+                data: params,
+                success: function(response) {
+                    if (response.code === 200) {
+                        totalRecords = response.total;
+                        renderRecords(response.data);
+                        updatePaginationInfo(page);
+                    }
+                },
+                error: function (error) {
+                    hideLoading();
+                    showError('筛选记录失败，请稍后重试');
+                    console.error('筛选记录失败:', error);
+                }
+            });
+        }
+
+        // 渲染记录列表
+        function renderRecords(records) {
+            try {
+                const recordList = document.querySelector('.record-list');
+                const existingItems = recordList.querySelectorAll('.record-item');
+                existingItems.forEach(item => item.remove());
+
+                document.querySelector('.record-count').textContent = `共 ${records.length} 条记录`;
+
+                records.forEach(record => {
+                    const recordItem = document.createElement('li');
+                    recordItem.className = 'record-item';
+                    recordItem.dataset.id = record.id;
+
+                    const recordType = document.createElement('div');
+                    recordType.className = 'record-type';
+                    let iconClass = '';
+                    if (record.type_name === 'text') {
+                        iconClass = 'fa-file-text-o';
+                    } else if (record.type_name === 'image') {
+                        iconClass = 'fa-image';
+                    } else if (record.type_name === 'video') {
+                        iconClass = 'fa-video-camera';
+                    }
+                    recordType.innerHTML = `<i class="fa ${iconClass} record-type-icon" aria-hidden="true"></i>`;
+
+                    const recordContent = document.createElement('div');
+                    recordContent.className = 'record-content';
+                    const recordText = document.createElement('div');
+                    recordText.className = 'record-text';
+                    if (record.type_name === 'text') {
+                        recordText.textContent = record.text_content;
+                    } else if (record.type_name === 'image') {
+                        recordText.textContent = '图片识别记录';
+                    } else if (record.type_name === 'video') {
+                        recordText.textContent = '视频识别记录';
+                    }
+                    recordContent.appendChild(recordText);
+
+                    const recordEmotion = document.createElement('div');
+                    recordEmotion.className = 'record-emotion';
+                    const emotionTag = document.createElement('div');
+                    const emotionClass = record.emotion_class || 'unknown'; // 若为undefined，默认'unknown'
+                    emotionTag.className = `emotion-tag emotion-${emotionClass.toLowerCase()}`;
+                    let emotionText = '';
+                    switch(record.emotion_class.toLowerCase()) {
+                        case 'anger': emotionText = '愤怒'; break;
+                        case 'disgust': emotionText = '厌恶'; break;
+                        case 'fear': emotionText = '恐惧'; break;
+                        case 'happy': emotionText = '喜悦'; break;
+                        case 'neutral': emotionText = '中性'; break;
+                        case 'sadness': emotionText = '悲伤'; break;
+                        case 'surprise': emotionText = '惊讶'; break;
+                        default: emotionText = record.emotion_class;
+                    }
+                    emotionTag.textContent = emotionText;
+                    const confidenceLevel = document.createElement('div');
+                    confidenceLevel.className = 'confidence-level';
+                    confidenceLevel.textContent = `置信度: ${(record.confidence * 100).toFixed(2)}%`;
+                    recordEmotion.appendChild(emotionTag);
+                    recordEmotion.appendChild(confidenceLevel);
+
+                    const recordTime = document.createElement('div');
+                    recordTime.className = 'record-time';
+                    recordTime.textContent = record.created_at;
+
+                    const recordActions = document.createElement('div');
+                    recordActions.className = 'record-actions';
+                    const viewBtn = document.createElement('button');
+                    viewBtn.className = 'action-btn';
+                    viewBtn.dataset.id = record.id;
+                    viewBtn.innerHTML = '<i class="fa fa-eye" aria-hidden="true"></i> 查看详情';
+                    viewBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        currentRecordId = record.id;
+                        openRecordDetail(record.id);
+                    });
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'action-btn delete-btn';
+                    deleteBtn.dataset.id = record.id;
+                    deleteBtn.innerHTML = '<i class="fa fa-trash"></i> 删除';
+                    deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const recordId = btn.dataset.id;
+                    document.getElementById('confirmDelete').onclick = () => {
+                        fetch(`/api/history/delete/${recordId}`, { method: 'DELETE' })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.code === 200) {
+                                    btn.closest('.record-item').remove();
+                                    document.getElementById('deleteModal').style.display = 'none';
+                                    alert('删除成功'); // 新增提示
+                                } else {
+                                    alert(`删除失败: ${data.message}`); // 错误提示
+                                }
+                            })
+                            .catch(err => {
+                                console.error('删除请求失败:', err);
+                                alert('删除请求失败，请重试');
+                            });
+                    };
+                    document.getElementById('deleteModal').style.display = 'flex';
+                    });
+                    recordActions.appendChild(viewBtn);
+                    recordActions.appendChild(deleteBtn);
+
+                    recordItem.appendChild(recordType);
+                    recordItem.appendChild(recordContent);
+                    recordItem.appendChild(recordEmotion);
+                    recordItem.appendChild(recordTime);
+                    recordItem.appendChild(recordActions);
+
+                    recordItem.addEventListener('click', () => {
+                        currentRecordId = record.id;
+                        openRecordDetail(record.id);
+                    });
+
+                    recordList.appendChild(recordItem);
+                });
+            } catch (error) {
+                console.error('渲染记录失败:', error);
+                showError('加载记录失败，请重试');
+            } finally {
+                hideLoading(); // 无论成功/失败，最终都隐藏加载状态
+            }
+        }
+
+        // 更新分页信息
+        function updatePaginationInfo(page) {
+            const totalPages = Math.ceil(totalRecords / pageSize);
+            document.getElementById('pageInfo').textContent = `第 ${page} 页，共 ${totalPages} 页`;
+            document.getElementById('prevPage').disabled = page <= 1;
+            document.getElementById('nextPage').disabled = page >= totalPages;
+
+            document.getElementById('prevPage').onclick = () => {
+                if (page > 1) {
+                    currentPage = page - 1;
+                    applyFiltersWithPage(currentPage);
+                }
+            };
+
+            document.getElementById('nextPage').onclick = () => {
+                if (page < totalPages) {
+                    currentPage = page + 1;
+                    applyFiltersWithPage(currentPage);
+                }
+            };
+        }
+
+        // 重置筛选
+        resetFilters.addEventListener('click', () => {
+            document.getElementById('timeRange').value = 'all';
+            document.getElementById('emotionType').value = 'all';
+            document.getElementById('dataType').value = 'all';
+            currentPage = 1;
+            applyFiltersWithPage(currentPage);
+        });
+
+        // 加载状态控制
+        function showLoading() {
+            loadingIndicator.style.display = 'block';
+        }
+
+        function hideLoading() {
+            loadingIndicator.style.display = 'none';
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+
+        function hideError() {
+            errorMessage.style.display = 'none';
+        }
+
+        // 初始化分页
+        updatePaginationInfo(currentPage);
+    </script>
+</body>
+</html>

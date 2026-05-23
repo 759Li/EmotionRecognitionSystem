@@ -1,0 +1,112 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.4 Chrome/138.0.7204.97 Electron/37.2.1 Safari/537.36" version="28.0.4">
+  <diagram name="第 1 页" id="Ba3W4sX9JynmC26N9sUU">
+    <mxGraphModel dx="506" dy="599" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="bxJ2f3jni1UTRir_EZLf-1" target="bxJ2f3jni1UTRir_EZLf-18" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-36" value="HTTP请求/响应" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="bxJ2f3jni1UTRir_EZLf-35" vertex="1" connectable="0">
+          <mxGeometry x="-0.1067" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="100" y="20" width="390" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-2" value="识别页面" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="130" y="70" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-3" value="历史记录" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="250" y="70" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-4" value="数据看板" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="368.5" y="70" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-5" value="前端层" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="250" y="20" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-6" value="(HTML/CSS/JavaScript, ECharts, Tailwind CSS)&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="140" y="40" width="300" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="bxJ2f3jni1UTRir_EZLf-13" target="bxJ2f3jni1UTRir_EZLf-27" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-38" value="函数调用" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="bxJ2f3jni1UTRir_EZLf-37" vertex="1" connectable="0">
+          <mxGeometry x="-0.0667" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-13" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="100" y="160" width="390" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-14" value="用户认证" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="130" y="210" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-15" value="识别服务" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="250" y="210" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-16" value="历史记录" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="369" y="210" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-18" value="后端API层" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="257.5" y="160" width="75" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-19" value="(Flask框架, RESTful API)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="202.5" y="180" width="185" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="bxJ2f3jni1UTRir_EZLf-20" target="bxJ2f3jni1UTRir_EZLf-29" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-40" value="数据库操作/文件读写" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="bxJ2f3jni1UTRir_EZLf-39" vertex="1" connectable="0">
+          <mxGeometry x="-0.1067" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-20" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="100" y="300" width="390" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-23" value="文本分析" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="130" y="350" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-24" value="情绪分类" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="369" y="350" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-25" value="图像/视频特征提取" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="230" y="350" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-27" value="模型层" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="265" y="300" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-28" value="(文本模型: BERT, 图像/视频模型: LightGBM + dlib)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="156.25" y="320" width="277.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-29" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="100" y="440" width="390" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-42" value="用户表" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="130" y="490" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-43" value="识别类型表" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="369" y="550" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-44" value="识别记录表" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="130" y="550" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-45" value="分享链接表" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="369" y="490" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-55" value="文件存储系统" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="235" y="500" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-56" value="数据存储层" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="252.5" y="440" width="85" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bxJ2f3jni1UTRir_EZLf-57" value="(MySQL数据库, 文件系统)&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="202.5" y="460" width="185" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

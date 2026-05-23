@@ -1,0 +1,403 @@
+<!--
+文件功能：数据看板页面模板，展示情绪分布统计和趋势分析可视化图表
+编写日期：2025年07月
+班级：物联一班
+学号：202378040109
+作者：李正标
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>数据看板 - 情绪识别系统</title>
+
+    <!-- 样式表引入 -->
+    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet">  <!-- 字体图标样式 -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">          <!-- 公共样式 -->
+    <!-- Google 字体 -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+
+    <!-- JS 脚本引入 -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>             <!-- jQuery 基础库 -->
+    <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>  <!-- 图表库 ECharts -->
+
+    <!-- 页面元信息 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">   <!-- 响应式视口设置 -->
+    <meta charset="UTF-8">                                             <!-- 字符编码 -->
+
+    <style>
+        /* 导航栏样式 */
+        .nav-bar {
+            position: fixed;                     /* 固定定位 */
+            top: 0;
+            left: 0;
+            width: 100%;                         /* 占满屏幕宽度 */
+            background: rgba(22, 93, 255, 0.9);  /* 半透明蓝色背景 */
+            padding: 15px 0;                     /* 内边距 */
+            z-index: 1000;                       /* 置于最上层 */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);  /* 阴影效果 */
+        }
+
+        .nav-container {
+            width: 90%;                          /* 容器宽度 */
+            max-width: 1200px;                   /* 最大宽度限制 */
+            margin: 0 auto;                      /* 居中显示 */
+            display: flex;                       /* 弹性布局 */
+            justify-content: space-between;      /* 子元素两端对齐 */
+            align-items: center;                 /* 垂直居中 */
+        }
+
+        .logo {
+            font-size: 24px;                     /* logo 文字大小 */
+            color: white;                        /* 白色文字 */
+            font-weight: bold;                   /* 加粗字体 */
+            display: flex;                       /* 弹性布局 */
+            align-items: center;                 /* 垂直居中 */
+        }
+
+        .logo i {
+            margin-right: 10px;                  /* 图标与文字间距 */
+            font-size: 28px;                     /* 图标大小 */
+        }
+
+        .nav-links {
+            display: flex;                       /* 导航链接水平排列 */
+            list-style: none;                    /* 去除列表符号 */
+        }
+
+        .nav-links li {
+            margin: 0 15px;                      /* 链接项之间留白 */
+        }
+
+        .nav-links a {
+            color: white;                        /* 白色链接文字 */
+            text-decoration: none;               /* 去除下划线 */
+            font-size: 16px;                     /* 字号 */
+            transition: color 0.3s;              /* 颜色渐变过渡 */
+        }
+
+        .nav-links a:hover{
+            color: #FFC107;                      /* hover 变色为黄色 */
+        }
+
+        .user-actions {
+            display: flex;                       /* 用户操作区域弹性布局 */
+            align-items: center;                 /* 垂直居中 */
+        }
+
+        .user-actions a {
+            color: white;                        /* 白色文字 */
+            text-decoration: none;               /* 去除下划线 */
+            margin-left: 15px;                   /* 链接间距 */
+            display: flex;                       /* 弹性布局 */
+            align-items: center;                 /* 垂直居中 */
+        }
+
+        .user-actions a i {
+            margin-right: 5px;                   /* 图标与文字间距 */
+        }
+
+        /* 主内容区样式 */
+        .main-content {
+            margin-top: 80px;                    /* 避开固定导航栏 */
+            padding: 40px 20px;                  /* 内容内边距 */
+            width: 90%;                          /* 宽度控制 */
+            max-width: 1200px;                   /* 最大宽度 */
+            margin: 80px auto 40px;              /* 自动居中 */
+        }
+
+        .page-title {
+            text-align: center;                  /* 标题居中 */
+            margin-bottom: 40px;                 /* 底部留白 */
+        }
+
+        .page-title h1 {
+            font-size: 32px;                     /* 大标题字号 */
+            color: #165DFF;                      /* 主色调蓝色 */
+            margin-bottom: 10px;                 /* 下边距 */
+        }
+
+        .page-title p {
+            font-size: 16px;                     /* 描述文字字号 */
+            color: #555;                         /* 灰色描述文字 */
+            max-width: 700px;                    /* 描述最大宽度 */
+            margin: 0 auto;                      /* 居中 */
+        }
+
+        /* 数据卡片样式 */
+        .dashboard-cards {
+            display: flex;                       /* 弹性布局 */
+            flex-direction: column;              /* 改为垂直排列 */
+            gap: 30px;                           /* 卡片上下间距 */
+            width: 100%;                         /* 占满容器宽度 */
+            max-width: 800px;                    /* 限制最大宽度，避免内容过宽 */
+            margin: 0 auto;                      /* 水平居中 */
+        }
+
+        .dashboard-card {
+            width: 100%;                         /* 每个卡片占满宽度 */
+            min-width: auto;                     /* 取消最小宽度限制 */
+            background: white;                   /* 白色背景 */
+            border-radius: 10px;                 /* 圆角设计 */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);  /* 阴影效果 */
+            padding: 30px;                       /* 内边距 */
+            text-align: center;                  /* 文字居中 */
+            transition: transform 0.3s, box-shadow 0.3s;  /* 动画效果 */
+            cursor: pointer;                     /* 鼠标悬停指针 */
+        }
+
+        .dashboard-card h3 {
+            font-size: 22px;                     /* 卡片标题字号 */
+            color: #333;                         /* 深灰色标题 */
+            margin-bottom: 15px;                 /* 下边距 */
+            font-weight: 600;                    /* 加粗字体 */
+        }
+
+        .dashboard-card p {
+            font-size: 15px;                     /* 卡片描述文字 */
+            color: #666;                         /* 浅灰色文字 */
+            margin-bottom: 20px;                 /* 下边距 */
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;          /* 小屏时垂直排列 */
+                gap: 15px;                       /* 间距调整 */
+            }
+
+            .nav-links {
+                width: 100%;                     /* 占满容器 */
+                justify-content: center;         /* 居中显示 */
+            }
+
+            .user-actions {
+                width: 100%;                     /* 占满容器 */
+                justify-content: center;         /* 居中显示 */
+            }
+        }
+
+        /* 页脚样式 */
+        footer {
+            width: 100%;                         /* 占满页面宽度 */
+            background: linear-gradient(to right, #0052cc, #00b0e8);  /* 渐变背景 */
+            color: #fff;                         /* 白色文字 */
+            padding: 20px 0;                     /* 内边距 */
+            text-align: center;                  /* 内容居中 */
+        }
+
+        footer p {
+            margin: 0;                           /* 清除默认边距 */
+            font-size: 14px;                     /* 字号 */
+        }
+
+        .footer-social {
+            margin-top: 8px;                     /* 社交图标顶部留白 */
+        }
+
+        .footer-social a {
+            color: #fff;                         /* 白色图标 */
+            margin: 0 5px;                       /* 图标间距 */
+            font-size: 18px;                     /* 图标大小 */
+            text-decoration: none;               /* 去除下划线 */
+            transition: color 0.3s ease;         /* 颜色渐变动画 */
+        }
+
+        .footer-social a:hover {
+            color: #c2e9f7;                      /* hover 时浅蓝色 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav-bar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa fa-shield" aria-hidden="true"></i>  <!-- 盾牌图标 -->
+                <span>七情六欲</span>                            <!-- 项目名称 -->
+            </div>
+            <ul class="nav-links">
+                <li><a href="/recognition">情绪识别</a></li>     <!-- 情绪识别页面链接 -->
+                <li><a href="/history">历史记录</a></li>         <!-- 历史记录页面链接 -->
+                <li><a href="/dashboard" style="color: #FFC107; font-weight: bold;">数据看板</a></li>  <!-- 当前页面高亮 -->
+                <li><a href="/user">用户中心</a></li>           <!-- 用户中心页面链接 -->
+            </ul>
+            <div class="user-actions">
+                <a href="#"><i class="fa fa-bell" aria-hidden="true"></i></a>  <!-- 消息通知图标 -->
+                <a href="/"><i class="fa fa-sign-out" aria-hidden="true"></i>退出</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <div class="page-title">
+            <h1>数据看板</h1>                                 <!-- 页面主标题 -->
+            <p>查看情绪识别数据的统计和分析</p>                 <!-- 页面副标题 -->
+        </div>
+
+        <div class="dashboard-cards">
+            <!-- 情绪分布统计卡片 -->
+            <div class="dashboard-card">
+                <h3>情绪分布统计</h3>
+                <p>展示各类情绪的分布比例</p>
+                <div id="emotion-distribution-chart" style="width: 100%; height: 300px;"></div>  <!-- 图表容器 -->
+            </div>
+            <!-- 趋势分析卡片 -->
+            <div class="dashboard-card">
+                <h3>趋势分析</h3>
+                <p>分析情绪随时间的变化趋势</p>
+                <div id="trend-analysis-chart" style="width: 100%; height: 300px;"></div>  <!-- 图表容器 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer">
+            <p>© 2025 七情六欲项目组. 基于深度学习的人脸情绪识别系统</p>  <!-- 版权声明 -->
+        </div>
+    </footer>
+
+    <script>
+        // 获取后端传来的 JSON 数据
+        var emotionDistribution = JSON.parse('{% if emotion_distribution %}{{ emotion_distribution | tojson }}{% else %}{}{% endif %}');
+        var trendData = JSON.parse('{% if trend_data %}{{ trend_data | tojson }}{% else %}[]{% endif %}');
+
+        // 初始化 ECharts 实例
+        var emotionDistributionChart = echarts.init(document.getElementById('emotion-distribution-chart'));
+        var trendAnalysisChart = echarts.init(document.getElementById('trend-analysis-chart'));
+
+        // 绘制情绪分布图（修改后）
+if (Object.keys(emotionDistribution).length > 0) {
+    var xData = [], yData = [];
+    for (var emotion in emotionDistribution) {
+        xData.push(emotion);
+        yData.push(emotionDistribution[emotion]);
+    }
+    emotionDistributionChart.setOption({
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: { type: 'shadow' }
+        },
+        xAxis: { type: 'category', data: xData },
+        yAxis: { type: 'value', name: '出现次数' },
+        series: [{
+            data: yData,
+            type: 'bar',
+            label: { show: true, position: 'top' },
+            // 按情绪类型匹配颜色
+            itemStyle: {
+                color: function(params) {
+                    // 映射情绪到对应颜色
+                    const colorMap = {
+                        'anger': '#FF5252',
+                        'disgust': '#AB47BC',
+                        'fear': '#424242',
+                        'happy': '#66BB6A',
+                        'neutral': '#BDBDBD',
+                        'sadness': '#42A5F5',
+                        'surprise': '#FFA726'
+                    };
+                    return colorMap[xData[params.dataIndex]] || '#ccc';
+                }
+            }
+        }]
+    });
+        } else {
+            emotionDistributionChart.setOption({
+                title: {
+                    text: '暂无数据',
+                    left: 'center',
+                    top: 'center'
+                }
+            });
+        }
+
+// 绘制情绪趋势分析图（修复时间反序问题）
+if (trendData.length > 0) {
+    // 情绪配置：名称+颜色（与情绪分布图表保持一致）
+    const emotionConfig = {
+        anger: { name: '愤怒', color: '#FF5252' },
+        disgust: { name: '厌恶', color: '#AB47BC' },
+        fear: { name: '恐惧', color: '#424242' },
+        happy: { name: '喜悦', color: '#66BB6A' },
+        neutral: { name: '中性', color: '#BDBDBD' },
+        sadness: { name: '悲伤', color: '#42A5F5' },
+        surprise: { name: '惊讶', color: '#FFA726' }
+    };
+
+    // 1. 提取时间点并排序（核心修改）
+    const rawTimes = [...new Set(trendData.map(item => item.time))]; // 去重原始时间
+    const sortedTimes = rawTimes
+        .map(timeStr => ({
+            time: timeStr,
+            timestamp: new Date(timeStr).getTime() // 转换为时间戳
+        }))
+        .sort((a, b) => a.timestamp - b.timestamp) // 按时间戳升序（旧新）
+        .map(item => item.time); // 转回时间字符串
+
+    const xData = sortedTimes; // 排序后的X轴时间
+    const yData = Object.values(emotionConfig).map(item => item.name); // 7种情绪
+
+    // 2. 构建散点数据：[时间, 情绪名称, 强度=1（默认）]
+    const scatterData = [];
+    trendData.forEach(item => {
+        const emotionKey = item.emotionValue; // 原始数据中的情绪标识（如"anger"）
+        const emotion = emotionConfig[emotionKey];
+        if (emotion) { // 仅处理已知情绪
+            scatterData.push({
+                value: [item.time, emotion.name, 1], // 强度默认为1（可根据实际置信度调整）
+                itemStyle: { color: emotion.color } // 应用对应颜色
+            });
+        }
+    });
+
+    // 3. 配置ECharts图表
+    trendAnalysisChart.setOption({
+        tooltip: {
+            trigger: 'item',
+            formatter: params => {
+                const [time, emotion] = params.value;
+                return `时间: ${time}<br/>情绪: ${emotion}`;
+            }
+        },
+        legend: {
+            data: yData, // 显示所有情绪图例
+            bottom: 10
+        },
+        xAxis: {
+            type: 'category',
+            data: xData, // 已排序的时间
+            name: '时间',
+            axisLabel: {
+                rotate: 30, // 旋转时间标签避免重叠
+                interval: 0
+            }
+        },
+        yAxis: {
+            type: 'category',
+            data: yData,
+            name: '情绪类型'
+        },
+        series: [{
+            name: '情绪分布',
+            type: 'scatter',
+            data: scatterData,
+            symbolSize: 15, // 散点大小
+            emphasis: {
+                scale: true // 鼠标 hover 时放大散点
+            }
+        }]
+    });
+} else {
+    trendAnalysisChart.setOption({
+        title: {
+            text: '暂无趋势数据',
+            left: 'center',
+            top: 'center'
+        }
+    });
+}
+    </script>
+</body>
+</html>

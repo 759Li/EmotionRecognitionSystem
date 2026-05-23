@@ -1,0 +1,1330 @@
+/* 重置样式 */
+/* 重置所有 HTML 元素的默认边距、内边距、边框、字体大小、字体样式和垂直对齐方式 */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,nav ul,nav li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{
+    margin:0;
+    padding:0;
+    border:0;
+    font-size:100%;
+    font:inherit;
+    vertical-align:baseline;
+}
+/* 将 HTML5 新元素设置为块级元素 */
+article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+/* 重置列表样式，去除列表项的默认样式和边距 */
+ol,ul{
+    list-style:none;
+    margin:0px;
+    padding:0px;
+}
+/* 重置引用样式，去除引号 */
+blockquote,q{
+    quotes:none;
+}
+/* 去除引用前后的引号内容 */
+blockquote:before,blockquote:after,q:before,q:after{
+    content:'';
+    content:none;
+}
+/* 重置表格样式，合并边框并去除边框间距 */
+table{
+    border-collapse:collapse;
+    border-spacing:0;
+}
+/* 从这里开始自定义样式 */
+/* 去除链接的下划线 */
+a{
+    text-decoration:none;
+}
+/* 文本右对齐 */
+.txt-rt{
+    text-align:right;
+}
+/* 文本左对齐 */
+.txt-lt{
+    text-align:left;
+}
+/* 文本居中对齐 */
+.txt-center{
+    text-align:center;
+}
+/* 元素右浮动 */
+.float-rt{
+    float:right;
+}
+/* 元素左浮动 */
+.float-lt{
+    float:left;
+}
+/* 清除浮动 */
+.clear{
+    clear:both;
+}
+/* 相对定位 */
+.pos-relative{
+    position:relative;
+}
+/* 绝对定位 */
+.pos-absolute{
+    position:absolute;
+}
+/* 垂直基线对齐 */
+.vertical-base{
+    vertical-align:baseline;
+}
+/* 垂直顶部对齐 */
+.vertical-top{
+    vertical-align:top;
+}
+/* 垂直菜单，列表项显示为块级元素 */
+nav.vertical ul li{
+    display:block;
+}
+/* 水平菜单，列表项显示为内联块级元素 */
+nav.horizontal ul li{
+    display: inline-block;
+}
+/* 图片最大宽度为 100%，适应父容器 */
+img{
+    max-width:100%;
+}
+/* 重置样式结束 */
+
+/* 全局 body 样式 */
+body {
+    /* 设置背景为渐变颜色 */
+    background: linear-gradient(to right bottom, #1cc7d0 ,#013ca6, #013ca6,#1cc7d0);
+    /* 背景固定，不随页面滚动 */
+    background-attachment: fixed;
+    /* 背景居中显示 */
+    background-position: center;
+    /* 背景覆盖整个元素 */
+    background-size: cover;
+    /* 设置字体为 Montserrat，无衬线字体 */
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* 一级标题样式 */
+h1 {
+    /* 字体大小为 40px */
+    font-size: 40px;
+    /* 文本居中对齐 */
+    text-align: center;
+    /* 上下外边距分别为 2.3em 和 1.5em */
+    margin: 2.3em 0 1.5em;
+    /* 文本转换为大写 */
+    text-transform: uppercase;
+    /* 字母间距为 4px */
+    letter-spacing: 4px;
+    /* 字体颜色为白色 */
+    color: #fff;
+}
+
+/* 主要容器样式 */
+.main-agile {
+    /* 宽度为父容器的 28% */
+    width: 28%;
+    /* 水平居中对齐 */
+    margin: 0px auto 0px auto;
+    /* 背景为半透明黑色 */
+    background: rgba(0, 0, 0, 0.22);
+    /* 内边距为 12px */
+    padding: 12px;
+    /* 相对定位 */
+    position: relative;
+    /* 设置盒子阴影 */
+    -webkit-box-shadow: 5px 5px 7px 0px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 5px 5px 7px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 5px 5px 7px 0px rgba(0, 0, 0, 0.12);
+}
+
+/* 关闭警告框的样式 */
+.alert-close {
+    /* 设置背景图片 */
+    background: url('../../static/img/into.png') no-repeat 0px 0px;
+    /* 背景图片大小为 16px */
+    background-size: 16px;
+    /* 鼠标指针变为手型 */
+    cursor: pointer;
+    /* 高度为 24px */
+    height: 24px;
+    /* 宽度为 24px */
+    width: 24px;
+    /* 绝对定位 */
+    position: absolute;
+    /* 距离右侧 11px */
+    right: 11px;
+    /* 距离顶部 17px */
+    top: 17px;
+    /* 颜色过渡效果，持续时间为 0.2 秒 */
+    -webkit-transition: color 0.2s ease-in-out;
+    -moz-transition: color 0.2s ease-in-out;
+    -o-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+    /* 层级为 999 */
+    z-index: 999;
+}
+
+/* 内容区域样式 */
+.content-wthree {
+    /* 上下左右内边距为 50px */
+    padding: 50px 50px;
+    /* 文本居中对齐 */
+    text-align: center;
+    /* 相对定位 */
+    position: relative;
+}
+
+/*.circle-w3layouts {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    background: rgba(1, 60, 166, 0.75);
+    top: -4em;
+    left: -4em;
+    border-radius: 87px;
+}*/
+
+/* 二级标题样式 */
+h2 {
+    /* 字体颜色为白色 */
+    color: #fff;
+    /* 字体大小为 28px */
+    font-size: 28px;
+    /* 字母间距为 2px */
+    letter-spacing: 2px;
+    /* 文本居中对齐 */
+    text-align: center;
+    /* 字体粗细为 500 */
+    font-weight: 500;
+    /* 下外边距为 1.3em */
+    margin-bottom: 1.3em;
+    /* 文本转换为大写 */
+    text-transform: uppercase;
+}
+
+/* 文本输入框和密码输入框样式 */
+.content-wthree input[type="text"], .content-wthree input[type="password"] {
+    /* 去除轮廓线 */
+    outline: none;
+    /* 字体大小为 14px */
+    font-size: 14px;
+    /* 字母间距为 1px */
+    letter-spacing: 1px;
+    /* 字体颜色为黑色 */
+    color: #000000;
+    /* 内边距为 12px 12px 12px 40px */
+    padding: 12px 12px 12px 40px;
+    /* 宽度为父容器的 85.2% */
+    width: 85.2%;
+    /* 去除边框 */
+    border: none;
+    /* 去除浏览器默认样式 */
+    -webkit-appearance: none;
+    /* 下外边距为 12px */
+    margin-bottom: 12px;
+    /* 边框为 1px 白色实线 */
+    border: 1px solid #fff;
+}
+
+/* 提交按钮样式 */
+.content-wthree input[type="submit"] {
+    /* 字体加粗 */
+    font-weight: bold;
+    /* 宽度为父容器的 100% */
+    width: 100%;
+    /* 背景颜色为 #19b9cc */
+    background: #19b9cc;
+    /* 去除边框 */
+    border: none;
+    /* 上下外边距分别为 3em 和 1.5em */
+    margin: 3em 0 1.5em;
+    /* 去除轮廓线 */
+    outline: none;
+    /* 字母间距为 1px */
+    letter-spacing: 1px;
+    /* 字体大小为 15px */
+    font-size: 15px;
+    /* 上下内边距为 14px */
+    padding: 14px 0;
+    /* 字体颜色为白色 */
+    color: #fff;
+    /* 文本转换为大写 */
+    text-transform: uppercase;
+    /* 过渡效果，持续时间为 0.5 秒 */
+    transition: .5s ease-in;
+    -webkit-transition: .5s ease-in;
+    -moz-transition: .5s ease-in;
+    -o-transition: .5s ease-in;
+    -ms-transition: .5s ease-in;
+    /* 鼠标指针变为手型 */
+    cursor: pointer;
+}
+
+/* 提交按钮悬停样式 */
+.content-wthree input[type="submit"]:hover{
+    /* 背景颜色变为 #00e5ff */
+    background:#00e5ff;
+}
+
+/* 输入框图标样式 */
+.inputs-w3ls i {
+    /* 绝对定位 */
+    position: absolute;
+    /* 距离左侧 12px */
+    left: 12px;
+    /* 距离底部 24.8px */
+    bottom: 24.8px;
+    /* 字体大小为 16px */
+    font-size: 16px;
+    /* 字体颜色为黑色 */
+    color: #000;
+}
+
+/* 输入框容器样式 */
+.inputs-w3ls {
+    /* 相对定位 */
+    position: relative;
+}
+
+/* 必填项星号标记 */
+.required-mark {
+    color: #ff4d4f;
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    font-size: 16px;
+}
+
+/* 文本链接样式 */
+.wthree-text a {
+    /* 字体颜色为白色 */
+    color: #fff;
+    /* 字体大小为 13px */
+    font-size: 13px;
+    /* 显示为内联元素 */
+    display: inline;
+    /* 字母间距为 1px */
+    letter-spacing: 1px;
+    /* 文本首字母大写 */
+    text-transform: capitalize;
+}
+
+/* 页脚样式 */
+.footer-w3l p{
+    /* 水平居中对齐 */
+    margin:0 auto;
+    /* 文本居中对齐 */
+    text-align:center;
+    /* 字体大小为 14px */
+    font-size:14px;
+    /* 字体颜色为浅灰色 */
+    color:#eee;
+    /* 字母间距为 1px */
+    letter-spacing:1px;
+    /* 行高为 27px */
+    line-height:27px;
+}
+
+/* 页脚链接样式 */
+.footer-w3l p a{
+    /* 字体颜色为白色 */
+    color:#fff;
+}
+
+/* 页脚链接悬停样式 */
+.footer-w3l p a:hover{
+    /* 添加下划线 */
+    text-decoration:underline;
+}
+
+/* 页脚容器样式 */
+.footer-w3l {
+    /* 上下外边距为 65px */
+    margin: 65px 0px;
+}
+.nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(22, 93, 255, 0.9);
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .logo i {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        .nav-links li {
+            margin: 0 15px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #FFC107;
+        }
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        .user-actions a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .user-actions a i {
+            margin-right: 5px;
+        }
+        .main-content {
+            margin-top: 80px;
+            padding: 40px 20px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 80px auto 40px;
+        }
+        .page-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .page-title h1 {
+            font-size: 36px;
+            color: #165DFF;
+            margin-bottom: 10px;
+        }
+        .page-title p {
+            font-size: 18px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .modality-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        .modality-card {
+            width: calc(33% - 20px);
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .modality-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .card-icon {
+            font-size: 48px;
+            color: #165DFF;
+            margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .card-desc {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .card-btn {
+            background: #165DFF;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .card-btn:hover {
+            background: #0D47A1;
+        }
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #eee, transparent);
+            margin: 50px 0;
+        }
+        .feature-section {
+            margin-top: 60px;
+        }
+        .feature-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .feature-title h2 {
+            font-size: 28px;
+            color: #333;
+            position: relative;
+            display: inline-block;
+        }
+        .feature-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #165DFF;
+            border-radius: 3px;
+        }
+        .feature-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+        .feature-card {
+            width: calc(33% - 20px);
+            min-width: 280px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            padding: 25px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .feature-icon {
+            font-size: 24px;
+            color: #165DFF;
+            margin-right: 15px;
+            margin-top: 2px;
+        }
+        .feature-content h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .feature-content p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        .footer {
+            background: #013ca6;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        .footer p {
+            margin: 0;
+            font-size: 15px;
+        }
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .modal-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 {
+            font-size: 22px;
+            color: #333;
+            margin: 0;
+        }
+        .close-modal {
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+            background: none;
+            border: none;
+            outline: none;
+        }
+        .modal-body {
+            padding: 30px;
+        }
+        /* 文本分析模态框 */
+        .text-analysis form {
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 15px;
+            color: #555;
+        }
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            min-height: 150px;
+            resize: vertical;
+        }
+        .char-count {
+            text-align: right;
+            font-size: 14px;
+            color: #999;
+            margin-top: 5px;
+        }
+        .btn-submit {
+            background: #165DFF;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover {
+            background: #0D47A1;
+        }
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            display: none;
+        }
+        .main-emotion {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 15px;
+        }
+        .emotion-confidence {
+            margin: 15px 0;
+        }
+        .confidence-bar {
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        .confidence-value {
+            height: 100%;
+            background: #165DFF;
+            width: 0;
+            border-radius: 5px;
+            transition: width 0.5s;
+        }
+        .confidence-text {
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+        }
+        .keywords {
+            margin-top: 15px;
+        }
+        .keyword {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #FFC107;
+            color: white;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        /* 图片分析模态框 */
+        .image-upload {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .upload-area {
+            border: 2px dashed #165DFF;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: border 0.3s;
+        }
+        .upload-area:hover {
+            border-color: #0D47A1;
+            background: #f0f7ff;
+        }
+        .upload-icon {
+            font-size: 36px;
+            color: #165DFF;
+            margin-bottom: 15px;
+        }
+        .upload-text {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .upload-note {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 20px;
+        }
+        .image-preview {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 5px;
+            display: none;
+        }
+        .face-result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            display: none;
+        }
+        .face-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-left: 3px solid #165DFF;
+            background: #f0f7ff;
+        }
+        .face-emotion {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .face-confidence {
+            font-size: 14px;
+            color: #666;
+        }
+        /* 视频分析模态框 */
+        .video-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .video-preview {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-width: 100%;
+            max-height: 400px;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .video-element {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 5px;
+        }
+        .no-camera {
+            color: #999;
+            font-size: 16px;
+            display: none;
+        }
+        .camera-controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .control-btn {
+            background: #f0f0f0;
+            color: #555;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .control-btn.active {
+            background: #165DFF;
+            color: white;
+        }
+        .video-emotion {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            display: none;
+        }
+        .current-emotion {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .emotion-level {
+            font-size: 14px;
+            color: #666;
+        }
+                .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .page-title h1 {
+            font-size: 32px;
+            color: #165DFF;
+            margin-bottom: 10px;
+        }
+        .page-title p {
+            font-size: 16px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+                /* 用户中心特有样式 */
+        .user-info {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .user-info h3 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .user-info p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .user-settings {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+        }
+        .user-settings h3 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .user-settings label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 15px;
+            color: #555;
+        }
+        .user-settings input[type="text"],
+        .user-settings input[type="password"] {
+            outline: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            color: #000000;
+            padding: 12px 12px 12px 40px;
+            width: 85.2%;
+            border: none;
+            -webkit-appearance: none;
+            margin-bottom: 12px;
+            border: 1px solid #fff;
+        }
+        .user-settings input[type="submit"] {
+            font-weight: bold;
+            width: 100%;
+            background: #19b9cc;
+            border: none;
+            margin: 3em 0 1.5em;
+            outline: none;
+            letter-spacing: 1px;
+            font-size: 15px;
+            padding: 14px 0;
+            color: #fff;
+            text-transform: uppercase;
+            transition: .5s ease-in;
+            -webkit-transition: .5s ease-in;
+            -moz-transition: .5s ease-in;
+            -o-transition: .5s ease-in;
+            -ms-transition: .5s ease-in;
+            cursor: pointer;
+        }
+        .user-settings input[type="submit"]:hover{
+            background:#00e5ff;
+        }
+        /* 数据看板特有样式 */
+        .dashboard-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        .dashboard-card {
+            width: calc(33% - 20px);
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .dashboard-card h3 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .dashboard-card p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+            }
+            .modality-card {
+                width: 100%;
+            }
+            .feature-card {
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .feature-icon {
+                margin-bottom: 10px;
+            }
+        }
+/* 响应式设计 */
+/* 当屏幕宽度小于等于 1600px 时 */
+@media(max-width:1600px){
+    /* 主要容器宽度变为 35% */
+    .main-agile {
+        width: 35%;
+    }
+    /* 文本输入框和密码输入框宽度变为 88.3% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 88.3%;
+    }
+}
+
+/* 当屏幕宽度小于等于 1440px 时 */
+@media(max-width:1440px){
+    /* 文本输入框和密码输入框宽度变为 87.3% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 87.3%;
+    }
+    /* 页脚上下外边距变为 45px */
+    .footer-w3l {
+        margin: 45px 0px;
+    }
+    /* 二级标题字体大小变为 25px，下外边距变为 1em */
+    h2 {
+        font-size: 25px;
+        margin-bottom: 1em;
+    }
+    /* 一级标题字体大小变为 35px，上下外边距分别变为 1.7em 和 1em */
+    h1 {
+        font-size: 35px;
+        margin: 1.7em 0 1em;
+    }
+    /* 内容区域上下左右内边距变为 40px */
+    .content-wthree {
+        padding: 40px 40px;
+    }
+}
+
+/* 当屏幕宽度小于等于 1366px 时 */
+@media(max-width:1366px){
+    /* 文本输入框和密码输入框宽度变为 86.3% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 86.3%;
+    }
+}
+
+/* 当屏幕宽度小于等于 1280px 时 */
+@media(max-width:1280px){
+    /* 内容区域上下左右内边距变为 35px */
+    .content-wthree {
+        padding: 35px 35px;
+    }
+    /* 一级标题字体大小变为 33px，上下外边距分别变为 1.5em 和 1em */
+    h1 {
+        font-size: 33px;
+        margin: 1.5em 0 1em;
+    }
+    /* 提交按钮上下外边距分别变为 2.5em 和 1.3em */
+    .content-wthree input[type="submit"] {
+        margin: 2.5em 0 1.3em;
+    }
+    /* 页脚上下外边距变为 36px */
+    .footer-w3l {
+        margin: 36px 0px;
+    }
+}
+
+/* 当屏幕宽度小于等于 1080px 时 */
+@media(max-width:1080px){
+    /* 主要容器宽度变为 40% */
+    .main-agile {
+        width: 40%;
+    }
+    /* 文本输入框和密码输入框宽度变为 84.9% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 84.9%;
+    }
+}
+
+/* 当屏幕宽度小于等于 1050px 时 */
+@media(max-width:1050px){
+    /* 主要容器宽度变为 41% */
+    .main-agile {
+        width: 41%;
+    }
+}
+
+/* 当屏幕宽度小于等于 1024px 时 */
+@media(max-width:1024px){
+    /* 一级标题上下外边距分别变为 2.3em 和 1.3em */
+    h1 {
+        margin: 2.3em 0 1.3em;
+    }
+    /* 页脚上下外边距变为 55px */
+    .footer-w3l {
+        margin: 55px 0px;
+    }
+    /* 主要容器宽度变为 42% */
+    .main-agile {
+        width: 42%;
+    }
+}
+
+/* 当屏幕宽度小于等于 991px 时 */
+@media(max-width:991px){
+    /* 一级标题上下外边距分别变为 1.5em 和 1em */
+    h1 {
+        margin: 1.5em 0 1em;
+    }
+    /* 页脚上下外边距变为 36px */
+    .footer-w3l {
+        margin: 36px 0px;
+    }
+    /* 文本输入框和密码输入框宽度变为 84.4% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 84.4%;
+    }
+}
+
+/* 当屏幕宽度小于等于 900px 时 */
+@media(max-width:900px){
+    /* 主要容器宽度变为 47% */
+    .main-agile {
+        width: 47%;
+    }
+    /* 文本输入框和密码输入框宽度变为 84.9% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 84.9%;
+    }
+    /* 二级标题字体大小变为 23px */
+    h2 {
+        font-size: 23px;
+    }
+    /* 一级标题字体大小变为 30px，上下外边距分别变为 1.8em 和 1.2em */
+    h1 {
+        margin: 1.8em 0 1.2em;
+        font-size: 30px;
+    }
+}
+
+/* 当屏幕宽度小于等于 800px 时 */
+@media(max-width:800px){
+    /* 主要容器宽度变为 50% */
+    .main-agile {
+        width: 50%;
+    }
+    /* 文本输入框和密码输入框宽度变为 83.5% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 83.5%;
+    }
+}
+
+/* 当屏幕宽度小于等于 768px 时 */
+@media(max-width:768px){
+    /* 一级标题上下外边距分别变为 3.5em 和 1.5em */
+    h1 {
+        margin: 3.5em 0 1.5em;
+    }
+    /* 文本输入框和密码输入框宽度变为 82.5% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 82.5%;
+    }
+    /* 页脚上下外边距变为 80px */
+    .footer-w3l {
+        margin: 80px 0px;
+    }
+}
+
+/* 当屏幕宽度小于等于 767px 时 */
+@media(max-width:767px){
+    /* 一级标题上下外边距分别变为 2.2em 和 1.2em */
+    h1 {
+        margin: 2.2em 0 1.2em;
+    }
+    /* 页脚上下外边距变为 42px */
+    .footer-w3l {
+        margin: 42px 0px;
+    }
+    /* 文本输入框和密码输入框字体大小变为 13px，内边距变为 10px 10px 10px 37px，宽度变为 84% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        font-size: 13px;
+        padding: 10px 10px 10px 37px;
+        width: 84%;
+    }
+    /* 提交按钮上下外边距分别变为 2em 和 1.3em，字体大小变为 14px，上下内边距变为 13px */
+    .content-wthree input[type="submit"] {
+        margin: 2em 0 1.3em;
+        font-size: 14px;
+        padding: 13px 0;
+    }
+    /* 页脚文本字体大小变为 13px */
+    .footer-w3l p {
+        font-size: 13px;
+    }
+    /* 输入框图标距离底部变为 23px */
+    .inputs-w3ls i {
+        bottom: 23px;
+    }
+}
+
+/* 当屏幕宽度小于等于 736px 时 */
+@media(max-width:736px){
+    /* 主要容器宽度变为 52% */
+    .main-agile {
+        width: 52%;
+    }
+}
+
+/* 当屏幕宽度小于等于 667px 时 */
+@media(max-width:667px){
+    /* 内容区域上下左右内边距变为 35px 30px */
+    .content-wthree {
+        padding: 35px 30px;
+    }
+    /* 文本输入框和密码输入框宽度变为 83% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 83%;
+    }
+}
+
+/* 当屏幕宽度小于等于 640px 时 */
+@media(max-width:640px){
+    /* 文本输入框和密码输入框宽度变为 82% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 82%;
+    }
+}
+
+/* 当屏幕宽度小于等于 600px 时 */
+@media(max-width:600px){
+    /* 主要容器宽度变为 60% */
+    .main-agile {
+        width: 60%;
+    }
+    /* 文本输入框和密码输入框宽度变为 83.5% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 83.5%;
+    }
+}
+
+/* 当屏幕宽度小于等于 568px 时 */
+@media(max-width:568px){
+    /* 一级标题字体大小变为 28px，上下外边距分别变为 2.5em 和 1.5em */
+    h1 {
+        margin: 2.5em 0 1.5em;
+        font-size: 28px;
+    }
+    /* 二级标题字体大小变为 20px */
+    h2 {
+        font-size: 20px;
+    }
+    /* 主要容器宽度变为 63% */
+    .main-agile {
+        width: 63%;
+    }
+}
+
+/* 当屏幕宽度小于等于 480px 时 */
+@media(max-width:480px){
+    /* 一级标题字体大小变为 25px */
+    h1 {
+        font-size: 25px;
+    }
+    /* 内容区域上下左右内边距变为 30px 25px */
+    .content-wthree {
+        padding: 30px 25px;
+    }
+    /* 主要容器宽度变为 70% */
+    .main-agile {
+        width: 70%;
+    }
+    /* 文本输入框和密码输入框宽度变为 83% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 83%;
+    }
+    /* 页脚上下外边距变为 35px */
+    .footer-w3l {
+        margin: 35px 0px;
+    }
+    /* 页脚文本行高变为 33px */
+    .footer-w3l p {
+        line-height: 33px;
+    }
+}
+
+/* 当屏幕宽度小于等于 440px 时 */
+@media(max-width:440px){
+    /* 页脚文本左右内边距变为 25px */
+    .footer-w3l p {
+        padding: 0 25px;
+    }
+}
+
+/* 当屏幕宽度小于等于 414px 时 */
+@media(max-width:414px){
+    /* 页脚上下外边距变为 35px，左右外边距变为 20px */
+    .footer-w3l {
+        margin: 35px 20px;
+    }
+    /* 主要容器宽度变为 80% */
+    .main-agile {
+        width: 80%;
+    }
+    /* 文本输入框和密码输入框宽度变为 82.7% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 82.7%;
+    }
+    /* 页脚文本左右内边距变为 0 */
+    .footer-w3l p {
+        padding: 0px;
+    }
+}
+
+/* 当屏幕宽度小于等于 384px 时 */
+@media(max-width:384px){
+    /* 文本输入框和密码输入框宽度变为 81% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 81%;
+    }
+    /* 一级标题字母间距变为 3px，上下外边距分别变为 2em 和 1.5em */
+    h1 {
+        letter-spacing: 3px;
+        margin: 2em 0 1.5em;
+    }
+    /* 页脚上下外边距变为 35px，左右外边距变为 24px */
+    .footer-w3l {
+        margin: 35px 24px;
+    }
+}
+
+/* 当屏幕宽度小于等于 375px 时 */
+@media(max-width:375px){
+    /* 文本输入框和密码输入框宽度变为 80.6% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 80.6%;
+    }
+    /* 一级标题字体大小变为 24px，上下外边距分别变为 2.3em 和 1.5em */
+    h1 {
+        margin: 2.3em 0 1.5em;
+        font-size: 24px;
+    }
+    /* 输入框图标字体大小变为 15px */
+    .inputs-w3ls i {
+        font-size: 15px;
+    }
+}
+
+/* 当屏幕宽度小于等于 320px 时 */
+@media(max-width:320px){
+    /* 一级标题字体大小变为 22px，字母间距变为 2px，上下外边距分别变为 1.6em 和 1.2em */
+    h1 {
+        margin: 1.6em 0 1.2em;
+        font-size: 22px;
+        letter-spacing: 2px;
+    }
+    /* 二级标题字体大小变为 17px */
+    h2 {
+        font-size: 17px;
+    }
+    /* 内容区域上下左右内边距变为 20px 15px */
+    .content-wthree {
+        padding: 20px 15px;
+    }
+    /* 页脚上下外边距变为 27px，左右外边距变为 22px */
+    .footer-w3l {
+        margin: 27px 22px;
+    }
+    /* 文本输入框和密码输入框宽度变为 78% */
+    .content-wthree input[type="text"], .content-wthree input[type="password"] {
+        width: 78%;
+    }
+    /* 页脚文本行高变为 27px */
+    .footer-w3l p {
+        line-height: 27px;
+    }
+}

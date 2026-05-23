@@ -1,0 +1,98 @@
+# ==============================================
+# 1. 核心敏感配置文件（绝对不能提交！）
+# ==============================================
+.env
+.env.local
+.env.*.local
+# 保留.env.example作为配置模板
+!.env.example
+
+# ==============================================
+# 2. Python基础忽略项
+# ==============================================
+# 编译字节码
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 打包和分发
+build/
+dist/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 虚拟环境（如果在项目目录内创建）
+venv/
+env/
+ENV/
+.venv/
+
+# ==============================================
+# 3. IDE和编辑器配置
+# ==============================================
+# PyCharm/IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# 其他编辑器
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ==============================================
+# 4. 运行时生成的用户数据和存储
+# ==============================================
+# 用户上传的资源文件（图片、视频）
+p3_resources/
+storage/
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+*.tmp
+*.bak
+*.cache
+
+# ==============================================
+# 5. 大模型文件和训练数据（Git不适合存储大文件）
+# 这些文件已在云盘提供，无需提交到代码仓库
+# ==============================================
+# 文本预训练模型（数百MB级别）
+p1_models_train/TextModel/nlp_structbert_emotion_classification_chinese_base/
+
+# 图像模型相关大文件
+p1_models_train/LightGBM/model/*.npz
+p1_models_train/LightGBM/model/*.npy
+p1_models_train/LightGBM/shape_predictor_68_face_landmarks.dat
+
+# 训练数据集
+p1_models_train/LightGBM/data/
+
+# 训练生成的图表
+p1_models_train/LightGBM/plots/
+
+# 第三方依赖包（如dlib的whl文件）
+*.whl
+
+# ==============================================
+# 6. 其他可选忽略项
+# ==============================================
+# 压缩包（如页面模板.zip，如需保留可注释此行）
+*.zip
+
+# 数据库备份文件
+*.sql.bak
+*.dump
